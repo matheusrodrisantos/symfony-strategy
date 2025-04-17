@@ -1,5 +1,7 @@
-controllers:
-    resource:
-        path: ../src/Controller/
-        namespace: App\Controller
+evento_controllers:
+    resource: '../src/Evento/Controller/'
+    type: attribute
+
+participante_controllers:
+    resource: '../src/Participante/Controller/'
     type: attribute

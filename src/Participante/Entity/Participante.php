@@ -1,14 +1,16 @@
 <?php
 
-namespace App\Entity;
+namespace App\Participante\Entity;
 
-use App\Repository\ParticipanteRepository;
+use App\Participante\Repository\ParticipanteRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Evento\Entity\Evento;
 
 #[ORM\Entity(repositoryClass: ParticipanteRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Participante
 {
     #[ORM\Id]
@@ -33,9 +35,6 @@ class Participante
 
     #[ORM\Column]
     private ?bool $aceiteLgpd = null;
-
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $dataCreated = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
@@ -136,11 +135,18 @@ class Participante
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): static
-    {
-        $this->createdAt = $createdAt;
 
-        return $this;
+    #[ORM\PrePersist]
+    public function setCreatedAtValue(): void
+    {
+        $this->createdAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable();
+    }
+
+    #[ORM\PreUpdate]
+    public function setUpadteAtValue(): void
+    {
+        $this->updatedAt = new \DateTimeImmutable();
     }
 
     public function getUpdatedAt(): ?\DateTimeImmutable
@@ -148,12 +154,6 @@ class Participante
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, Evento>
