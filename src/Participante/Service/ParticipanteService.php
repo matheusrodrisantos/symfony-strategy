@@ -2,6 +2,7 @@
 
 namespace App\Participante\Service;
 
+
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -23,12 +24,13 @@ class ParticipanteService{
         private ParticipanteRepository $participanteRepository
     ){}
 
-    public function save(ParticipanteInputDTO $participanteInputDTO){
+    public function save(ParticipanteInputDTO $participanteInputDTO): ParticipanteOutputDTO{
         
         $participante=$participanteInputDTO->toEntity();
         $this->em->persist($participante);
         $this->em->flush();
 
+        return ParticipanteOutputDTO::fromEntity($participante);
     }
 
     public function validate(array $data): ParticipanteInputDTO|array {

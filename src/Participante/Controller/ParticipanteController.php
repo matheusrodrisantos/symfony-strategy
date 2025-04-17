@@ -19,22 +19,19 @@ final class ParticipanteController extends AbstractController
     {
         try{
             $data=$request->toArray();
+          
             $participanteDto=$this->participanteService->validate($data);
-            $this->participanteService->save($participanteDto);
+          
+            $dtoOutput=$this->participanteService->save($participanteDto);
+            return new JsonResponse($dtoOutput->toArray());
             return new JsonResponse(['mensagem' => 'Participante salvo com sucesso!'], 201);
         }catch(\Exception $j){
+         
             return $this->json(
                 ['error' => 'An error : ' . $j->getMessage()],
                 Response::HTTP_BAD_REQUEST
             );
         }
-        
-        
-
-        return $this->json(
-            ''
-        );
-
         
     }
 }
