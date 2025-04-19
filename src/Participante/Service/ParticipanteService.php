@@ -23,18 +23,24 @@ class ParticipanteService{
     public function save(ParticipanteInputDTO $participanteInputDTO): ParticipanteOutputDTO{
         
         $participante=$participanteInputDTO->toEntity();
-        $this->em->persist($participante);
-        $this->em->flush();
+
+        $this->participanteRepository->save($participante);
 
         return ParticipanteOutputDTO::fromEntity($participante);
     }
 
-    public function update(ParticipanteInputDTO $participanteInputDTO):ParticipanteOutputDTO{
-        $participante=$participanteInputDTO->toEntity();
-        $this->em->persist($participante);
-        $this->em->flush();
+    public function update(int $id, ParticipanteInputDTO $participanteInputDTO) {
+        
+        $newParticipante=$this->participanteRepository->find($id);
 
-        return ParticipanteOutputDTO::fromEntity($participante);
+        if(!$newParticipante){
+            return $this->save($participanteInputDTO);
+        }
+
+        
+
     }
+
+   
 
 }

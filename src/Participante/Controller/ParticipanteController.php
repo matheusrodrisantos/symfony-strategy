@@ -38,15 +38,16 @@ final class ParticipanteController extends AbstractController
         }
     }
 
-    #[Route('/participante/{id}', name: 'app_participante_update', methods:['PUT'])]
-    public function toUpdate(Request $request): JsonResponse
+    #[Route('/participante/{$id}', name: 'app_participante_update', methods:['PUT'])]
+    public function update(int $id, Request $request): JsonResponse
     {
         try{
             
             $participanteDto=$this->participanteValidator->validate($request->getContent());
-            $dtoOutput=$this->participanteService->update($participanteDto);
+          
+            $dtoOutput=$this->participanteService->update($id, $participanteDto);
 
-            return new JsonResponse($dtoOutput->toArray(),201);
+            return new JsonResponse('',Response::HTTP_CREATED);
 
         }catch(\Exception $j){
          
@@ -56,25 +57,5 @@ final class ParticipanteController extends AbstractController
             );
         }
     }
-
-    #[Route('/participante/', name: 'app_participante_list', methods:['GET'])]
-    public function getAll(Request $request): JsonResponse
-    {
-        try{
-            
-            $participanteDto=$this->participanteValidator->validate($request->getContent());
-            $dtoOutput=$this->participanteService->update($participanteDto);
-
-            return new JsonResponse($dtoOutput->toArray(),201);
-
-        }catch(\Exception $j){
-         
-            return $this->json(
-                ['error' => 'An error : ' . $j->getMessage()],
-                Response::HTTP_BAD_REQUEST
-            );
-        }
-    }
-
     
 }

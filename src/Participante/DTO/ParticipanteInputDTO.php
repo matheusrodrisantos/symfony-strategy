@@ -63,4 +63,16 @@ class ParticipanteInputDTO
 
         return $participante;
     }
+
+    public function applyToEntity(Participante $participante):Participante{
+
+        $participante->setNome($this->nome);
+        $participante->setCpf($this->cpf);
+        $participante->setDataNascimento($this->dataNascimento);
+        $participante->setEmail($this->email);
+        $participante->setNumero($this->numero);
+        $participante->setAceiteLgpd($this->aceiteLgpd);
+        
+        return $participante;
+    }
 }
