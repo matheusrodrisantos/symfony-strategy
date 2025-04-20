@@ -7,14 +7,18 @@ use Symfony\Component\HttpFoundation\{JsonResponse,Request,Response};
 use Symfony\Component\Routing\Attribute\Route;
 
 use App\Participante\Service\ParticipanteService;
-use App\Participante\Service\ParticipanteValidator;
+
+use App\Participante\DTO\ParticipanteInputDTO;
+
+
+use App\Service\ValidatorJsonToDto;
 
 final class ParticipanteController extends AbstractController
 {
     
     public function __construct(
         private ParticipanteService $participanteService,
-        private ParticipanteValidator $participanteValidator
+        private ValidatorJsonToDto $validatorJsonToDto
     ){}
 
 
@@ -23,7 +27,11 @@ final class ParticipanteController extends AbstractController
     {
         try{
             
-            $participanteDto=$this->participanteValidator->validate($request->getContent(),['create']);
+            $participanteDto=$this->validatorJsonToDto->validate(
+                data: $request->getContent(),
+                pathDtoClass: ParticipanteInputDTO::class,
+                group:['create']
+            );
           
             $dtoOutput=$this->participanteService->save($participanteDto);
 
@@ -43,7 +51,11 @@ final class ParticipanteController extends AbstractController
     {
         try{
             
-            $participanteDto=$this->participanteValidator->validate($request->getContent(),['update']);
+            $participanteDto=$this->validatorJsonToDto->validate(
+                data:$request->getContent(),
+                pathDtoClass:ParticipanteInputDTO::class,
+                group:['update']
+            );
           
             $dtoOutput=$this->participanteService->update($id, $participanteDto);
 

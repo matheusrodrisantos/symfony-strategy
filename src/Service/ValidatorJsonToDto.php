@@ -1,33 +1,27 @@
 <?php
 
-namespace App\Participante\Service;
+namespace App\Service;
 
-use App\Participante\DTO\ParticipanteInputDTO;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Validator\Exception\ValidatorException;
 
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
-
-
-class ParticipanteValidator{
+class ValidatorJsonToDto{
 
     public function __construct(
         private SerializerInterface $serializer,
         private ValidatorInterface $validator
     ){}
 
-    public function validate($data,array $group): ParticipanteInputDTO
+    public function validate($data, string $pathDtoClass ,array $group): ?object
     {
-        $participanteInputDto = $this->serializer->deserialize(
+        $inputDto = $this->serializer->deserialize(
             $data,
-            ParticipanteInputDTO::class,
+            $pathDtoClass,
             'json'
         );
 
-        $dtoValidationErrors = $this->validator->validate(value: $participanteInputDto, groups: $group);
+        $dtoValidationErrors = $this->validator->validate(value: $inputDto, groups: $group);
     
         if (count($dtoValidationErrors) > 0) {
             $errors = '';
@@ -38,8 +32,9 @@ class ParticipanteValidator{
             
             throw new ValidatorException($errors);
         }
-        
-        return $participanteInputDto;
+
+        return $inputDto;
+
     }
 
 }
