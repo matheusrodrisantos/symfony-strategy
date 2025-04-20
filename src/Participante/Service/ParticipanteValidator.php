@@ -19,7 +19,7 @@ class ParticipanteValidator{
         private ValidatorInterface $validator
     ){}
 
-    public function validate($data): ParticipanteInputDTO
+    public function validate($data,array $group): ParticipanteInputDTO
     {
         $participanteInputDto = $this->serializer->deserialize(
             $data,
@@ -27,7 +27,7 @@ class ParticipanteValidator{
             'json'
         );
 
-        $dtoValidationErrors = $this->validator->validate($participanteInputDto);
+        $dtoValidationErrors = $this->validator->validate(value: $participanteInputDto, groups: $group);
     
         if (count($dtoValidationErrors) > 0) {
             $errors = '';
@@ -41,7 +41,5 @@ class ParticipanteValidator{
         
         return $participanteInputDto;
     }
-
-    
 
 }

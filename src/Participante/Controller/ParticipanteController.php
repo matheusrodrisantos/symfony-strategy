@@ -23,7 +23,7 @@ final class ParticipanteController extends AbstractController
     {
         try{
             
-            $participanteDto=$this->participanteValidator->validate($request->getContent());
+            $participanteDto=$this->participanteValidator->validate($request->getContent(),['create']);
           
             $dtoOutput=$this->participanteService->save($participanteDto);
 
@@ -43,7 +43,7 @@ final class ParticipanteController extends AbstractController
     {
         try{
             
-            $participanteDto=$this->participanteValidator->validate($request->getContent());
+            $participanteDto=$this->participanteValidator->validate($request->getContent(),['update']);
           
             $dtoOutput=$this->participanteService->update($id, $participanteDto);
 
