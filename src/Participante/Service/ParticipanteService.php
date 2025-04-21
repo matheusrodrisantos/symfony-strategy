@@ -48,6 +48,17 @@ class ParticipanteService{
         return $this->participanteFactory->createOutputDtoFromEntity($participante);
     }
 
+    public function delete(int $id): void
+    {
+        $participante = $this->participanteRepository->find($id);
+
+        if (!$participante) {
+            throw new Exception("Participante não encontrado");
+        }
+
+        $this->participanteRepository->delete($participante);
+    }
+
     public function list(){
 
         $participantes=$this->participanteRepository->findAll();

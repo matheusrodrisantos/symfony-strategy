@@ -42,5 +42,10 @@ class ParticipanteRepository extends ServiceEntityRepository
 
         return $participante;
     }
+
+    public function delete(Participante $participante): void{
+        $this->em->remove($participante);
+        $this->em->flush();
+    }
     
 }

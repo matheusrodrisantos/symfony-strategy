@@ -69,8 +69,26 @@ final class ParticipanteController extends AbstractController
             );
         }
     }
+
+    #[Route('/participante/{id}', 
+    name: 'app_participante_delete', 
+    methods:['DELETE'],
+    requirements: ['id' => '\d+'])]
+    public function delete(int $id): JsonResponse
+    {
+        try{
+            $this->participanteService->delete($id);
+            return $this->json('deletado com sucesso!');
+        }catch(\Exception $e){
+            return $this->json(
+                ['error' => 'An error : ' . $e->getMessage()],
+                Response::HTTP_BAD_REQUEST
+            );
+        }
+    }
+
     
-    #[Route('/participante/', name: 'app_participante_list', methods:['GET'])]
+    #[Route('/participante', name: 'app_participante_list', methods:['GET'])]
     public function list(): JsonResponse
     {
         try{
@@ -113,7 +131,6 @@ final class ParticipanteController extends AbstractController
                 ['error' => 'An error : ' . $e->getMessage()],
                 Response::HTTP_BAD_REQUEST
             );
-
         }  
     }
 
