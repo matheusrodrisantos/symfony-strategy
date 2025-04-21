@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Participante\DTO;
-use App\Participante\Entity\Participante;
 use DateTimeInterface;
 
 class ParticipanteOutputDTO{
@@ -28,17 +27,6 @@ class ParticipanteOutputDTO{
         $this->dataNascimento = $dataNascimento;
         $this->email = $email;
         $this->numero = $numero;
-    }
-
-    public static function fromEntity(Participante $participante) : self {
-        return new self(
-            id:$participante->getId(),
-            nome:$participante->getNome(),
-            cpf:$participante->getCpf(),
-            dataNascimento:$participante->getDataNascimento(),
-            email:$participante->getEmail(),
-            numero:$participante->getNumero()
-        );
     }
 
     public function toArray(): array

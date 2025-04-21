@@ -46,7 +46,7 @@ final class ParticipanteController extends AbstractController
         }
     }
 
-    #[Route('/participante/{$id}', name: 'app_participante_update', methods:['PUT'])]
+    #[Route('/participante/{id}', name: 'app_participante_update', methods:['PUT'])]
     public function update(int $id, Request $request): JsonResponse
     {
         try{
@@ -59,7 +59,7 @@ final class ParticipanteController extends AbstractController
           
             $dtoOutput=$this->participanteService->update($id, $participanteDto);
 
-            return new JsonResponse('',Response::HTTP_CREATED);
+            return new JsonResponse($dtoOutput,Response::HTTP_CREATED);
 
         }catch(\Exception $j){
          
@@ -70,4 +70,52 @@ final class ParticipanteController extends AbstractController
         }
     }
     
+    #[Route('/participante/', name: 'app_participante_list', methods:['GET'])]
+    public function list(): JsonResponse
+    {
+        try{
+            return $this->json($this->participanteService->list());
+        }catch(\Exception $e){
+            return $this->json(
+                ['error' => 'An error : ' . $e->getMessage()],
+                Response::HTTP_BAD_REQUEST
+            );
+        }
+    }
+
+    #[Route('/participante/{id}', 
+        name: 'app_participante_list_one', 
+        methods:['GET'],
+        requirements: ['id' => '\d+'])]
+    public function listOneById(int $id): JsonResponse
+    {
+        try{
+            return $this->json($this->participanteService->listById($id));
+        }catch(\Exception $e){
+            return $this->json(
+                ['error' => 'An error : ' . $e->getMessage()],
+                Response::HTTP_BAD_REQUEST
+            );
+        }
+    }
+
+    #[Route('/participante/email', name: 'participante_by_email', methods: ['GET'])]
+    public function getByEmail(Request $request)
+    {
+        $email = $request->query->get('email');
+
+        try{
+            return $this->json($this->participanteService->listByEmail($email));
+
+        }catch(\Exception $e){
+            
+            return $this->json(
+                ['error' => 'An error : ' . $e->getMessage()],
+                Response::HTTP_BAD_REQUEST
+            );
+
+        }  
+    }
+
+ 
 }

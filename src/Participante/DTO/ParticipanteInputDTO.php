@@ -4,8 +4,6 @@ namespace App\Participante\DTO;
 
 use DateTimeInterface;
 use Symfony\Component\Validator\Constraints as Assert;
-use App\Participante\Entity\Participante;
-
 
 class ParticipanteInputDTO
 {
@@ -24,6 +22,7 @@ class ParticipanteInputDTO
 
     #[Assert\NotBlank]
     #[Assert\NotNull(message: "O e-mail é obrigatório.",groups:['create'])]
+
     #[Assert\Email(message: "O e-mail '{{ value }}' não é válido.",groups:['create','update'])]
     public readonly ?string $email;
 
@@ -51,28 +50,4 @@ class ParticipanteInputDTO
         $this->aceiteLgpd = $aceiteLgpd;
     }
 
-    public function toEntity():Participante{
-        
-        $participante = new Participante();
-        $participante->setNome($this->nome);
-        $participante->setCpf($this->cpf);
-        $participante->setDataNascimento($this->dataNascimento);
-        $participante->setEmail($this->email);
-        $participante->setNumero($this->numero);
-        $participante->setAceiteLgpd($this->aceiteLgpd);
-
-        return $participante;
-    }
-
-    public function applyToEntity(Participante $participante):Participante{
-
-        $participante->setNome($this->nome);
-        $participante->setCpf($this->cpf);
-        $participante->setDataNascimento($this->dataNascimento);
-        $participante->setEmail($this->email);
-        $participante->setNumero($this->numero);
-        $participante->setAceiteLgpd($this->aceiteLgpd);
-        
-        return $participante;
-    }
 }

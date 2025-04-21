@@ -10,6 +10,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Validator\Exception\ValidatorException;
 
+use App\Participante\Factory\ParticipanteFactory;
+use Exception;
 
 class ParticipanteService{
 
@@ -17,29 +19,60 @@ class ParticipanteService{
     public function __construct(
         private ValidatorInterface $validator,
         private EntityManagerInterface $em, 
-        private ParticipanteRepository $participanteRepository
+        private ParticipanteRepository $participanteRepository,
+        private ParticipanteFactory $participanteFactory
     ){}
 
     public function save(ParticipanteInputDTO $participanteInputDTO): ParticipanteOutputDTO{
         
-        $participante=$participanteInputDTO->toEntity();
+        $participante=$this->participanteFactory->createEntityFromDto($participanteInputDTO);
 
         $this->participanteRepository->save($participante);
 
-        return ParticipanteOutputDTO::fromEntity($participante);
+        return $this->participanteFactory->createOutputDtoFromEntity($participante);
+
     }
 
-    public function update(int $id, ParticipanteInputDTO $participanteInputDTO) {
+    public function update(int $id, ParticipanteInputDTO $participanteInputDTO) : ParticipanteOutputDTO{
         
-        $newParticipante=$this->participanteRepository->find($id);
+        $participante = $this->participanteRepository->find($id);
 
-        if(!$newParticipante){
-            return $this->save($participanteInputDTO);
+        if (!$participante) {
+            throw new Exception("Participante não encontrado");
         }
 
-        
+        $this->participanteFactory->updateEntityFromDto($participante, $participanteInputDTO);
+
+        $this->participanteRepository->update($participante);
+
+        return $this->participanteFactory->createOutputDtoFromEntity($participante);
+    }
+
+    public function list(){
+
+        $participantes=$this->participanteRepository->findAll();
+
+        return $this->participanteFactory->createOutputDtoListFromEntities($participantes);
 
     }
+
+    public function listById(int $id){
+
+        $participante=$this->participanteRepository->getOrFail($id);
+
+        return $this->participanteFactory->createOutputDtoFromEntity($participante);
+
+    }
+
+
+    public function listByEmail(string $email){
+
+        $participante=$this->participanteRepository->findOneBy(['email'=>$email],['id' => 'DESC']);
+
+        return $this->participanteFactory->createOutputDtoFromEntity($participante);
+
+    }
+
 
    
 

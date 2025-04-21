@@ -22,7 +22,7 @@ class ParticipanteFactory
         return $participante;
     }
 
-    public function updateEntityFromDto(Participante $participante,ParticipanteInputDTO $inputDto):Participante{
+    public function updateEntityFromDto(Participante $participante, ParticipanteInputDTO $inputDto):Participante {
 
         if ($inputDto->nome !== null) {
             $participante->setNome($inputDto->nome);
@@ -61,6 +61,11 @@ class ParticipanteFactory
             numero:$participante->getNumero()
         );
 
+    }
+
+    public function  createOutputDtoListFromEntities(array $entities) : array {
+        
+        return array_map([$this, 'createOutputDtoFromEntity'], $entities);
     }
 
 }
