@@ -11,14 +11,15 @@ use App\Participante\Service\ParticipanteService;
 use App\Participante\DTO\ParticipanteInputDTO;
 
 
-use App\Service\ValidatorJsonToDto;
+use App\Service\{ValidatorJsonToDto,ResponseService};
 
 final class ParticipanteController extends AbstractController
 {
     
     public function __construct(
         private ParticipanteService $participanteService,
-        private ValidatorJsonToDto $validatorJsonToDto
+        private ValidatorJsonToDto $validatorJsonToDto,
+        private ResponseService $responseService
     ){}
 
 
@@ -35,14 +36,11 @@ final class ParticipanteController extends AbstractController
           
             $dtoOutput=$this->participanteService->save($participanteDto);
 
-            return new JsonResponse($dtoOutput->toArray(),201);
+            return $this->responseService->createSuccessResponse($dtoOutput->toArray(),Response::HTTP_CREATED); 
 
         }catch(\Exception $j){
          
-            return $this->json(
-                ['error' => 'An error : ' . $j->getMessage()],
-                Response::HTTP_BAD_REQUEST
-            );
+            return $this->responseService->createErrorResponse($j->getMessage(),Response::HTTP_BAD_REQUEST);
         }
     }
 
@@ -59,14 +57,11 @@ final class ParticipanteController extends AbstractController
           
             $dtoOutput=$this->participanteService->update($id, $participanteDto);
 
-            return new JsonResponse($dtoOutput,Response::HTTP_CREATED);
+            return $this->responseService->createSuccessResponse($dtoOutput->toArray(),Response::HTTP_CREATED); 
 
         }catch(\Exception $j){
          
-            return $this->json(
-                ['error' => 'An error : ' . $j->getMessage()],
-                Response::HTTP_BAD_REQUEST
-            );
+            return $this->responseService->createErrorResponse($j->getMessage(),Response::HTTP_BAD_REQUEST);
         }
     }
 
@@ -78,12 +73,10 @@ final class ParticipanteController extends AbstractController
     {
         try{
             $this->participanteService->delete($id);
-            return $this->json('deletado com sucesso!');
+            return $this->responseService->createSuccessResponse(['DELETADO COM SUCESSO'],Response::HTTP_OK);
         }catch(\Exception $e){
-            return $this->json(
-                ['error' => 'An error : ' . $e->getMessage()],
-                Response::HTTP_BAD_REQUEST
-            );
+
+            return $this->responseService->createErrorResponse($e->getMessage(),Response::HTTP_BAD_REQUEST);
         }
     }
 
@@ -92,12 +85,9 @@ final class ParticipanteController extends AbstractController
     public function list(): JsonResponse
     {
         try{
-            return $this->json($this->participanteService->list());
+            return $this->responseService->createSuccessResponse($this->participanteService->list(),Response::HTTP_OK);
         }catch(\Exception $e){
-            return $this->json(
-                ['error' => 'An error : ' . $e->getMessage()],
-                Response::HTTP_BAD_REQUEST
-            );
+            return $this->responseService->createErrorResponse($e->getMessage(),Response::HTTP_BAD_REQUEST);
         }
     }
 
@@ -108,12 +98,10 @@ final class ParticipanteController extends AbstractController
     public function listOneById(int $id): JsonResponse
     {
         try{
-            return $this->json($this->participanteService->listById($id));
+            return $this->responseService->createSuccessResponse($this->participanteService->listById($id)
+                ->toArray(),Response::HTTP_OK);
         }catch(\Exception $e){
-            return $this->json(
-                ['error' => 'An error : ' . $e->getMessage()],
-                Response::HTTP_BAD_REQUEST
-            );
+            return $this->responseService->createErrorResponse($e->getMessage(),Response::HTTP_BAD_REQUEST);
         }
     }
 
@@ -123,14 +111,12 @@ final class ParticipanteController extends AbstractController
         $email = $request->query->get('email');
 
         try{
-            return $this->json($this->participanteService->listByEmail($email));
+            return $this->responseService->createSuccessResponse($this->participanteService->listByEmail($email)
+                ->toArray(),Response::HTTP_OK);
 
         }catch(\Exception $e){
             
-            return $this->json(
-                ['error' => 'An error : ' . $e->getMessage()],
-                Response::HTTP_BAD_REQUEST
-            );
+            return $this->responseService->createErrorResponse($e->getMessage(),Response::HTTP_BAD_REQUEST);
         }  
     }
 
