@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Participante\Entity\Participante;
 
 #[ORM\Entity(repositoryClass: EventoRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Evento
 {
     #[ORM\Id]
@@ -40,6 +41,12 @@ class Evento
 
     #[ORM\Column]
     private ?bool $presencial = null;
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $updatedAt = null;
 
     /**
      * @var Collection<int, Participante>
@@ -151,6 +158,30 @@ class Evento
         $this->presencial = $presencial;
 
         return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+
+    #[ORM\PrePersist]
+    public function setCreatedAtValue(): void
+    {
+        $this->createdAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable();
+    }
+
+    #[ORM\PreUpdate]
+    public function setUpadteAtValue(): void
+    {
+        $this->updatedAt = new \DateTimeImmutable();
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
     }
 
     /**

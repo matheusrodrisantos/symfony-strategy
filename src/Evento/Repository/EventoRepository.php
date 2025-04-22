@@ -2,7 +2,7 @@
 
 namespace App\Evento\Repository;
 
-use App\Entity\Evento;
+use App\Evento\Entity\Evento;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
