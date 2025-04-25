@@ -1,35 +1,35 @@
-# Evento Manager API
+# EventRcc Manager API
 
 ## Sobre o Projeto
 
-Este é um projeto de API para gerenciamento de eventos desenvolvido com Symfony 7.2 e PHP 8.3, utilizado para estudar o padrão de projeto Strategy. A aplicação permite gerenciar eventos e seus participantes através de uma API RESTful.
+Este é um projeto de API para gerenciamento de EventRccs desenvolvido com Symfony 7.2 e PHP 8.3, utilizado para estudar o padrão de projeto Strategy. A aplicação permite gerenciar EventRccs e seus participants através de uma API RESTful.
 
 ## Estrutura do Projeto
 
 ```
 .
-├── Evento
+├── EventRcc
 │   ├── Controller
-│   │   └── EventoController.php
+│   │   └── EventRccController.php
 │   ├── DTO
 │   ├── Entity
-│   │   └── Evento.php
+│   │   └── EventRcc.php
 │   ├── Repository
-│   │   └── EventoRepository.php
+│   │   └── EventRccRepository.php
 │   └── Service
 ├── Kernel.php
-└── Participante
+└── Participant
     ├── Controller
-    │   └── ParticipanteController.php
+    │   └── ParticipantController.php
     ├── DTO
-    │   ├── ParticipanteInputDTO.php
-    │   └── ParticipanteOutputDTO.php
+    │   ├── ParticipantInputDTO.php
+    │   └── ParticipantOutputDTO.php
     ├── Entity
-    │   └── Participante.php
+    │   └── Participant.php
     ├── Repository
-    │   └── ParticipanteRepository.php
+    │   └── ParticipantRepository.php
     └── Service
-        └── ParticipanteService.php
+        └── ParticipantService.php
 ```
 
 ## Tecnologias Utilizadas
@@ -41,9 +41,9 @@ Este é um projeto de API para gerenciamento de eventos desenvolvido com Symfony
 
 ## Funcionalidades
 
-- Cadastro e gerenciamento de eventos
-- Cadastro e gerenciamento de participantes
-- Associação de participantes a eventos
+- Cadastro e gerenciamento de EventRccs
+- Cadastro e gerenciamento de participants
+- Associação de participants a EventRccs
 - Implementação do padrão Strategy (em desenvolvimento)
 
 ## Próximos Passos
@@ -53,7 +53,7 @@ Este é um projeto de API para gerenciamento de eventos desenvolvido com Symfony
 - Adição de novas funcionalidades como:
   - Sistema de notificações
   - Relatórios de participação
-  - Calendário de eventos
+  - Calendário de EventRccs
 
 ## Como Executar
 

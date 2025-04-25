@@ -1,7 +1,7 @@
-evento_controllers:
-    resource: '../src/Evento/Controller/'
+event_controllers:
+    resource: '../src/EventRcc/Controller/'
     type: attribute
 
-participante_controllers:
-    resource: '../src/Participante/Controller/'
+participant_controllers:
+    resource: '../src/Participant/Controller/'
     type: attribute

@@ -1,23 +1,23 @@
 <?php
 
-namespace App\Evento\Repository;
+namespace App\EventRcc\Repository;
 
-use App\Evento\Entity\Evento;
+use App\EventRcc\Entity\EventRcc;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Evento>
+ * @extends ServiceEntityRepository<EventRcc>
  */
-class EventoRepository extends ServiceEntityRepository
+class EventRccRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Evento::class);
+        parent::__construct($registry, EventRcc::class);
     }
 
     //    /**
-    //     * @return Evento[] Returns an array of Evento objects
+    //     * @return EventRcc[] Returns an array of EventRcc objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -31,7 +31,7 @@ class EventoRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?Evento
+    //    public function findOneBySomeField($value): ?EventRcc
     //    {
     //        return $this->createQueryBuilder('e')
     //            ->andWhere('e.exampleField = :val')

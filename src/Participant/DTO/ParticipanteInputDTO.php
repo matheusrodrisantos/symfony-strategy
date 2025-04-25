@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Participante\DTO;
+namespace App\Participant\DTO;
 
 use DateTimeInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class ParticipanteInputDTO
+class ParticipantInputDTO
 {
-    #[Assert\NotNull(message: "O nome é obrigatório.", groups:['create'])]
-    #[Assert\Length(min: 2, max: 255, minMessage: "O nome deve ter pelo menos {{ limit }} caracteres.", groups:['create','update'])]
-    public readonly ?string $nome;
+    #[Assert\NotNull(message: "O name é obrigatório.", groups:['create'])]
+    #[Assert\Length(min: 2, max: 255, minMessage: "O name deve ter pelo menos {{ limit }} caracteres.", groups:['create','update'])]
+    public readonly ?string $name;
 
     #[Assert\NotNull(message: "O CPF é obrigatório.", groups:['create'])]
     #[Assert\Length(exactly: 11, exactMessage: "O CPF deve ter exatamente {{ limit }} dígitos.",groups:['create','update'])]
@@ -18,7 +18,7 @@ class ParticipanteInputDTO
 
     #[Assert\NotNull(message: "A data de nascimento é obrigatória.",groups:['create'])]
     #[Assert\LessThan("today", message: "A data de nascimento deve ser anterior a hoje.",groups:['create','update'])]
-    public readonly ?DateTimeInterface $dataNascimento;
+    public readonly ?DateTimeInterface $dateOfBirth;
 
     #[Assert\NotBlank]
     #[Assert\NotNull(message: "O e-mail é obrigatório.",groups:['create'])]
@@ -28,26 +28,26 @@ class ParticipanteInputDTO
 
     #[Assert\NotNull(message: "O número de telefone é obrigatório.",groups:['create'])]
     #[Assert\Length(min: 9, max: 20, minMessage: "O número deve ter no mínimo {{ limit }} caracteres.",groups:['create','update'])]
-    public readonly ?string $numero;
+    public readonly ?string $phoneNumber;
 
     #[Assert\Type("bool", message: "O campo aceite LGPD deve ser verdadeiro ou falso.",groups:['create'])]
     #[Assert\IsTrue(message: "Você deve aceitar os termos da LGPD.",groups:['create'])]
-    public readonly ?bool $aceiteLgpd;
+    public readonly ?bool $lgpdAcceptance;
 
     public function __construct(
-        ?string $nome,
+        ?string $name,
         ?string $cpf,
-        ?DateTimeInterface $dataNascimento,
+        ?DateTimeInterface $dateOfBirth,
         ?string $email,
-        ?string $numero,
-        ?bool $aceiteLgpd
+        ?string $phoneNumber,
+        ?bool $lgpdAcceptance
     ) {
-        $this->nome = $nome;
+        $this->name = $name;
         $this->cpf = $cpf;
-        $this->dataNascimento = $dataNascimento;
+        $this->dateOfBirth = $dateOfBirth;
         $this->email = $email;
-        $this->numero = $numero;
-        $this->aceiteLgpd = $aceiteLgpd;
+        $this->phoneNumber = $phoneNumber;
+        $this->lgpdAcceptance = $lgpdAcceptance;
     }
 
 }

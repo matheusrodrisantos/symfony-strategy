@@ -1,40 +1,40 @@
 <?php
 
-namespace App\Participante\Controller;
+namespace App\Participant\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\{JsonResponse,Request,Response};
 use Symfony\Component\Routing\Attribute\Route;
 
-use App\Participante\Service\ParticipanteService;
+use App\Participant\Service\ParticipantService;
 
-use App\Participante\DTO\ParticipanteInputDTO;
+use App\Participant\DTO\ParticipantInputDTO;
 
 
 use App\Service\{ValidatorJsonToDto,ResponseService};
 
-final class ParticipanteController extends AbstractController
+final class ParticipantController extends AbstractController
 {
     
     public function __construct(
-        private ParticipanteService $participanteService,
+        private ParticipantService $participantService,
         private ValidatorJsonToDto $validatorJsonToDto,
         private ResponseService $responseService
     ){}
 
 
-    #[Route('/participante', name: 'app_participante_create', methods:['POST'])]
+    #[Route('/participant', name: 'app_participant_create', methods:['POST'])]
     public function create(Request $request): JsonResponse
     {
         try{
             
-            $participanteDto=$this->validatorJsonToDto->validate(
+            $participantDto=$this->validatorJsonToDto->validate(
                 data: $request->getContent(),
-                pathDtoClass: ParticipanteInputDTO::class,
+                pathDtoClass: ParticipantInputDTO::class,
                 group:['create']
             );
           
-            $dtoOutput=$this->participanteService->save($participanteDto);
+            $dtoOutput=$this->participantService->save($participantDto);
 
             return $this->responseService->createSuccessResponse($dtoOutput->toArray(),Response::HTTP_CREATED); 
 
@@ -44,18 +44,18 @@ final class ParticipanteController extends AbstractController
         }
     }
 
-    #[Route('/participante/{id}', name: 'app_participante_update', methods:['PUT'])]
+    #[Route('/participant/{id}', name: 'app_participant_update', methods:['PUT'])]
     public function update(int $id, Request $request): JsonResponse
     {
         try{
             
-            $participanteDto=$this->validatorJsonToDto->validate(
+            $participantDto=$this->validatorJsonToDto->validate(
                 data:$request->getContent(),
-                pathDtoClass:ParticipanteInputDTO::class,
+                pathDtoClass:ParticipantInputDTO::class,
                 group:['update']
             );
           
-            $dtoOutput=$this->participanteService->update($id, $participanteDto);
+            $dtoOutput=$this->participantService->update($id, $participantDto);
 
             return $this->responseService->createSuccessResponse($dtoOutput->toArray(),Response::HTTP_CREATED); 
 
@@ -65,14 +65,14 @@ final class ParticipanteController extends AbstractController
         }
     }
 
-    #[Route('/participante/{id}', 
-    name: 'app_participante_delete', 
+    #[Route('/participant/{id}', 
+    name: 'app_participant_delete', 
     methods:['DELETE'],
     requirements: ['id' => '\d+'])]
     public function delete(int $id): JsonResponse
     {
         try{
-            $this->participanteService->delete($id);
+            $this->participantService->delete($id);
             return $this->responseService->createSuccessResponse(['DELETADO COM SUCESSO'],Response::HTTP_OK);
         }catch(\Exception $e){
 
@@ -81,37 +81,37 @@ final class ParticipanteController extends AbstractController
     }
 
     
-    #[Route('/participante', name: 'app_participante_list', methods:['GET'])]
+    #[Route('/participant', name: 'app_participant_list', methods:['GET'])]
     public function list(): JsonResponse
     {
         try{
-            return $this->responseService->createSuccessResponse($this->participanteService->list(),Response::HTTP_OK);
+            return $this->responseService->createSuccessResponse($this->participantService->list(),Response::HTTP_OK);
         }catch(\Exception $e){
             return $this->responseService->createErrorResponse($e->getMessage(),Response::HTTP_BAD_REQUEST);
         }
     }
 
-    #[Route('/participante/{id}', 
-        name: 'app_participante_list_one', 
+    #[Route('/participant/{id}', 
+        name: 'app_participant_list_one', 
         methods:['GET'],
         requirements: ['id' => '\d+'])]
     public function listOneById(int $id): JsonResponse
     {
         try{
-            return $this->responseService->createSuccessResponse($this->participanteService->listById($id)
+            return $this->responseService->createSuccessResponse($this->participantService->listById($id)
                 ->toArray(),Response::HTTP_OK);
         }catch(\Exception $e){
             return $this->responseService->createErrorResponse($e->getMessage(),Response::HTTP_BAD_REQUEST);
         }
     }
 
-    #[Route('/participante/email', name: 'participante_by_email', methods: ['GET'])]
+    #[Route('/participant/email', name: 'participant_by_email', methods: ['GET'])]
     public function getByEmail(Request $request)
     {
         $email = $request->query->get('email');
 
         try{
-            return $this->responseService->createSuccessResponse($this->participanteService->listByEmail($email)
+            return $this->responseService->createSuccessResponse($this->participantService->listByEmail($email)
                 ->toArray(),Response::HTTP_OK);
 
         }catch(\Exception $e){
