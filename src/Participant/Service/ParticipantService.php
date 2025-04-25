@@ -8,7 +8,6 @@ use App\Participant\DTO\{ParticipantInputDTO,ParticipantOutputDTO};
 use App\Participant\Repository\ParticipantRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Symfony\Component\Validator\Exception\ValidatorException;
 
 use App\Participant\Factory\ParticipantFactory;
 use Exception;

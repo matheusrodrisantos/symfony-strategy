@@ -6,7 +6,7 @@ use App\Participant\DTO\ParticipantInputDTO;
 use App\Participant\DTO\ParticipantOutputDTO;
 use App\Participant\Entity\Participant;
 
-class ParticipantFactory
+class ParticipantFactory 
 {
     public function createEntityFromDto(ParticipantInputDTO $inputDto): Participant
     {
