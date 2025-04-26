@@ -2,7 +2,10 @@
 
 namespace App\Registration\Controller;
 
-class RegistrationController
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
+
+class RegistrationController extends AbstractController
 {
     // TODO: Adicionar métodos do controller
 }

@@ -85,7 +85,7 @@ class ParticipantService implements ServiceCrudInterface
     }
 
 
-    public function listByEmail(string $email): OutputDto{
+    public function listByEmail(string $email): ParticipantOutputDTO{
 
         $participant=$this->participantRepository->findOneBy(['email'=>$email],['id' => 'DESC']);
         if(!$participant){

@@ -1,12 +1,11 @@
 <?php
 
 namespace App\EventRcc\DTO;
+use App\Shared\DTO\OutputDto;
 
-class EventRccOutputDTO
+class EventRccOutputDTO implements OutputDto
 {
     
-    
-
     public function __construct(
         public readonly ?int $id,
         public readonly ?string $name,
@@ -17,12 +16,8 @@ class EventRccOutputDTO
         public readonly ?\DateTimeImmutable $endDate,
         public readonly ?bool $online,
         public readonly ?bool $inPerson
-    ) {
-        
-        
-    }
+    ) {}
 
-    // Método toArray
     public function toArray(): array
     {
         return [

@@ -66,7 +66,7 @@ class EventRccFactory
             id:$EventRcc->getId(),
             name:$EventRcc->getName(),
             type:$EventRcc->getType(),
-            free:$EventRcc->getFree(),
+            free:$EventRcc->isFree(),
             value:$EventRcc->getValue(),
             startDate:$EventRcc->getStartDate(),
             endDate:$EventRcc->getEndDate(),
