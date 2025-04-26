@@ -23,7 +23,7 @@ class EventRcc
     private ?string $type = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $free = null;
+    private ?bool $free = null;
 
     #[ORM\Column]
     private ?float $value = null;
@@ -79,12 +79,12 @@ class EventRcc
         return $this;
     }
 
-    public function getFree(): ?string
+    public function isFree(): ?bool
     {
         return $this->free;
     }
 
-    public function setFree(string $free): static
+    public function setFree(bool $free): static
     {
         $this->free = $free;
 

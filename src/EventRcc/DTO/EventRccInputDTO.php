@@ -13,8 +13,8 @@ class EventRccInputDTO
     #[Assert\NotBlank(message: "O type é obrigatório.", groups: ['create'])]
     public readonly ?string $type;
 
-    #[Assert\NotBlank(message: "O campo 'free' é obrigatório.", groups: ['create'])]
-    public readonly ?string $free;
+    #[Assert\NotNull(message: "O campo 'free' é obrigatório.", groups: ['create'])]
+    public readonly ?bool $free;
 
     #[Assert\NotNull(message: "O value é obrigatório.", groups: ['create'])]
     #[Assert\Type(type: 'float', message: "O value deve ser um número decimal.", groups: ['create', 'update'])]
@@ -39,7 +39,7 @@ class EventRccInputDTO
     public function __construct(
         ?string $name,
         ?string $type,
-        ?string $free,
+        ?bool $free,
         ?float $value,
         ?\DateTimeImmutable $startDate,
         ?\DateTimeImmutable $endDate,
