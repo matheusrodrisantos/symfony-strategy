@@ -8,12 +8,14 @@ use App\Participant\DTO\{ParticipantInputDTO,ParticipantOutputDTO};
 use App\Participant\Repository\ParticipantRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-
 use App\Participant\Factory\ParticipantFactory;
+use App\Shared\Service\ServiceCrudInterface;
 use Exception;
 
-class ParticipantService{
+use App\Shared\DTO\{InputDto,OutputDto};
 
+class ParticipantService implements ServiceCrudInterface
+{
 
     public function __construct(
         private ValidatorInterface $validator,
@@ -22,8 +24,12 @@ class ParticipantService{
         private ParticipantFactory $participantFactory
     ){}
 
-    public function save(ParticipantInputDTO $participantInputDTO): ParticipantOutputDTO{
+    public function save(InputDto $participantInputDTO): OutputDto{
         
+        if (!$participantInputDTO instanceof ParticipantInputDTO) {
+            throw new Exception("Input DTO deve ser do tipo ParticipantInputDTO");
+        }
+
         $participant=$this->participantFactory->createEntityFromDto($participantInputDTO);
 
         $this->participantRepository->save($participant);
@@ -32,8 +38,12 @@ class ParticipantService{
 
     }
 
-    public function update(int $id, ParticipantInputDTO $participantInputDTO) : ParticipantOutputDTO{
+    public function update(int $id, InputDto $participantInputDTO) : OutputDto{
         
+        if (!$participantInputDTO instanceof ParticipantInputDTO) {
+            throw new Exception("Input DTO deve ser do tipo ParticipantInputDTO");
+        }
+
         $participant = $this->participantRepository->find($id);
 
         if (!$participant) {
@@ -58,7 +68,7 @@ class ParticipantService{
         $this->participantRepository->delete($participant);
     }
 
-    public function list(){
+    public function list():array{
 
         $participants=$this->participantRepository->findAll();
 
@@ -66,7 +76,7 @@ class ParticipantService{
 
     }
 
-    public function listById(int $id){
+    public function listById(int $id):OutputDto{
 
         $participant=$this->participantRepository->getOrFail($id);
 
@@ -75,17 +85,13 @@ class ParticipantService{
     }
 
 
-    public function listByEmail(string $email){
+    public function listByEmail(string $email): OutputDto{
 
         $participant=$this->participantRepository->findOneBy(['email'=>$email],['id' => 'DESC']);
         if(!$participant){
             throw new Exception("Participant não encontrado");
         }
         return $this->participantFactory->createOutputDtoFromEntity($participant);
-
     }
-
-
-   
 
 }

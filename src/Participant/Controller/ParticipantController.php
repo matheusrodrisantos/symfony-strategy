@@ -10,8 +10,8 @@ use App\Participant\Service\ParticipantService;
 
 use App\Participant\DTO\ParticipantInputDTO;
 
-
-use App\Service\{ValidatorJsonToDto,ResponseService};
+use App\Shared\Service\ResponseService;
+use App\Shared\Validator\ValidatorJsonToDto;
 
 final class ParticipantController extends AbstractController
 {

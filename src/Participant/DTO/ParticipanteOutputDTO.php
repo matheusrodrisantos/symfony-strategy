@@ -3,8 +3,9 @@
 namespace App\Participant\DTO;
 
 use DateTimeInterface;
+use App\Shared\DTO\OutputDto;
 
-class ParticipantOutputDTO
+class ParticipantOutputDTO implements OutputDto
 {
     public readonly int $id;
     public readonly string $name;

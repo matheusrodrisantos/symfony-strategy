@@ -4,8 +4,9 @@ namespace App\Participant\DTO;
 
 use DateTimeInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Shared\DTO\InputDto;
 
-class ParticipantInputDTO
+class ParticipantInputDTO implements InputDto
 {
     #[Assert\NotNull(message: "O name é obrigatório.", groups:['create'])]
     #[Assert\Length(min: 2, max: 255, minMessage: "O name deve ter pelo menos {{ limit }} caracteres.", groups:['create','update'])]
