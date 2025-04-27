@@ -46,16 +46,25 @@ class EventRccService implements ServiceCrudInterface{
     }
 
     public function delete(int $id): void{
+        $participant = $this->eventRepository->find($id);
 
+        if (!$participant) {
+            throw new \Exception("Participant não encontrado");
+        }
+
+        $this->eventRepository->delete($participant);
     }
 
     public function list():array{
-        return [];
+
+        $participants=$this->eventRepository->findAll();
+
+        return $this->eventRccFactory->createOutputDtoListFromEntities($participants);
     }
 
     public function listById(int $id):OutputDto{
         
-        $eventRcc=$this->eventRepository->listById($id);
+        $eventRcc=$this->eventRepository->getOrFail($id);
 
         return $this->eventRccFactory->createOutputDtoFromEntity($eventRcc);
     }

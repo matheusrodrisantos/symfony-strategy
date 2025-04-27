@@ -20,7 +20,7 @@ final class EventRccController extends AbstractController
         private ResponseService $responseService
     ){ }
 
-    #[Route('/evento', name: 'app_event_create', methods:['POST'])]
+    #[Route('/event', name: 'app_event_create', methods:['POST'])]
     public function create(Request $request): JsonResponse
     {
         try{
@@ -60,7 +60,7 @@ final class EventRccController extends AbstractController
         }
     }
 
-    #[Route('/participant/{id}', 
+    #[Route('/event/{id}', 
     name: 'app_event_rcc_delete', 
     methods:['DELETE'],
     requirements: ['id' => '\d+'])]
@@ -76,7 +76,7 @@ final class EventRccController extends AbstractController
     }
 
     
-    #[Route('/participant', name: 'app_event_rcc_list', methods:['GET'])]
+    #[Route('/event', name: 'app_event_rcc_list', methods:['GET'])]
     public function list(): JsonResponse
     {
         try{
@@ -86,7 +86,7 @@ final class EventRccController extends AbstractController
         }
     }
 
-    #[Route('/participant/{id}', 
+    #[Route('/event/{id}', 
         name: 'app_event_rcc_list_one', 
         methods:['GET'],
         requirements: ['id' => '\d+'])]
