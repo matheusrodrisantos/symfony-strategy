@@ -2,20 +2,16 @@
 
 namespace App\EventRcc\Service;
 
-use App\EventRcc\DTO\{EventRccOutputDTO,EventRccInputDTO};
+use App\EventRcc\DTO\EventRccInputDTO;
 use App\EventRcc\Factory\EventRccFactory;
 use App\EventRcc\Repository\EventRccRepository;
 use App\Shared\DTO\InputDto;
 use App\Shared\DTO\OutputDto;
 use App\Shared\Service\ServiceCrudInterface;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class EventRccService implements ServiceCrudInterface{
 
     public function __construct(
-        private ValidatorInterface $validator,
-        private EntityManagerInterface $em,
         private EventRccRepository $eventRepository,
         private EventRccFactory $eventRccFactory
     ){}
@@ -23,7 +19,7 @@ class EventRccService implements ServiceCrudInterface{
     public function save(InputDto $eventInputDTO): OutputDto{
 
         if (!$eventInputDTO instanceof EventRccInputDTO) {
-            throw new \Exception("Input DTO deve ser do tipo ParticipantInputDTO");
+            throw new \Exception("Input DTO deve ser do tipo EventRccInputDTO");
         }
 
         $eventRcc=$this->eventRccFactory->createEntityFromDto($eventInputDTO);
@@ -35,7 +31,7 @@ class EventRccService implements ServiceCrudInterface{
 
     public function update(int $id, InputDto $eventInputDTO): OutputDto{
         if (!$eventInputDTO instanceof EventRccInputDTO) {
-            throw new \Exception("Input DTO deve ser do tipo ParticipantInputDTO");
+            throw new \Exception("Input DTO deve ser do tipo EventRccInputDTO");
         }
 
         $eventRcc=$this->eventRccFactory->createEntityFromDto($eventInputDTO);
@@ -49,7 +45,7 @@ class EventRccService implements ServiceCrudInterface{
         $participant = $this->eventRepository->find($id);
 
         if (!$participant) {
-            throw new \Exception("Participant não encontrado");
+            throw new \Exception("Event não encontrado");
         }
 
         $this->eventRepository->delete($participant);

@@ -3,11 +3,9 @@
 namespace App\Participant\Service;
 
 
-use App\Participant\DTO\{ParticipantInputDTO,ParticipantOutputDTO};
+use App\Participant\DTO\ParticipantInputDTO;
 
 use App\Participant\Repository\ParticipantRepository;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 use App\Participant\Factory\ParticipantFactory;
 use App\Shared\Service\ServiceCrudInterface;
 use Exception;
@@ -18,8 +16,6 @@ class ParticipantService implements ServiceCrudInterface
 {
 
     public function __construct(
-        private ValidatorInterface $validator,
-        private EntityManagerInterface $em, 
         private ParticipantRepository $participantRepository,
         private ParticipantFactory $participantFactory
     ){}
@@ -85,7 +81,7 @@ class ParticipantService implements ServiceCrudInterface
     }
 
 
-    public function listByEmail(string $email): ParticipantOutputDTO{
+    public function listByEmail(string $email): OutputDto{
 
         $participant=$this->participantRepository->findOneBy(['email'=>$email],['id' => 'DESC']);
         if(!$participant){
