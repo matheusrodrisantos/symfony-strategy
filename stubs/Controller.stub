@@ -28,4 +28,69 @@ class {{ Module }}Controller extends AbstractController
             return $this->responseService->createErrorResponse($e->getMessage(), Response::HTTP_BAD_REQUEST);
         }
     }
+
+    #[Route('/{{ routePrefix }}', name: 'app_{{ routePrefix }}_create', methods: ['POST'])]
+    public function create(Request $request): JsonResponse
+    {
+        try{
+            ${{ module }}Dto=$this->validatorJsonToDto->validate(
+                data:$request->getContent(),
+                pathDtoClass: {{ Module }}InputDTO::class,
+                group:['create']
+            );
+
+            ${{ module }}OutputDTO=$this->{{ module }}Service->save(${{ module }}Dto);
+
+            return $this->responseService->createSuccessResponse(${{ module }}OutputDTO->toArray(),Response::HTTP_CREATED); 
+
+        }catch(\Exception $e){
+            return $this->json('ERROR !'.$e->getMessage());   
+        }
+    }
+
+    #[Route('/{{ routePrefix }}/{id}', name: 'app_{{ routePrefix }}_update', methods: ['PUT'], requirements: ['id' => '\d+'])]
+    public function update(int $id, Request $request): JsonResponse
+    {
+        try {
+            ${{ module }}Dto = $this->validatorJsonToDto->validate(
+                data: $request->getContent(),
+                pathDtoClass: {{ Module }}InputDTO::class,
+                group: ['update']
+            );
+
+            ${{ module }}OutputDTO = $this->{{ module }}Service->update($id, ${{ module }}Dto);
+
+            return $this->responseService->createSuccessResponse(${{ module }}OutputDTO->toArray(), Response::HTTP_CREATED);
+        } catch (Exception $e) {
+            return $this->responseService->createErrorResponse($e->getMessage(), Response::HTTP_BAD_REQUEST);
+        }
+    }
+
+    #[Route('/{{ routePrefix }}/{id}', name: 'app_{{ routePrefix }}_delete', methods: ['DELETE'], requirements: ['id' => '\d+'])]
+    public function delete(int $id): JsonResponse
+    {
+        try {
+            $this->{{ module }}Service->delete($id);
+            return $this->responseService->createSuccessResponse(['DELETADO COM SUCESSO'], Response::HTTP_OK);
+        } catch (Exception $e) {
+            return $this->responseService->createErrorResponse($e->getMessage(), Response::HTTP_BAD_REQUEST);
+        }
+    }
+
+    #[Route('/{{ routePrefix }}/{id}', name: 'app_{{ routePrefix }}_list_one', methods: ['GET'], requirements: ['id' => '\d+'])]
+    public function listOneById(int $id): JsonResponse
+    {
+        try {
+            ${{ module }}OutputDTO = $this->{{ module }}Service->listById($id);
+
+            return $this->responseService->createSuccessResponse(${{ module }}OutputDTO->toArray(), Response::HTTP_OK);
+        } catch (Exception $e) {
+            return $this->responseService->createErrorResponse($e->getMessage(), Response::HTTP_BAD_REQUEST);
+        }
+    }
+
+
+
+
+
 }
