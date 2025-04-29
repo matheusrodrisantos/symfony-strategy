@@ -1,17 +1,17 @@
 <?php
 
-namespace App\{{ Module }}\Entity;
+namespace App\Voluntary\Entity;
 
 
-use App\{{ Module }}\Repository\{{ Module }}Repository;
+use App\Voluntary\Repository\VoluntaryRepository;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\DBAL\Types\Types;
 
 
-#[ORM\Entity(repositoryClass: {{ Module }}Repository::class)]
+#[ORM\Entity(repositoryClass: VoluntaryRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-class {{ Module }}
+class Voluntary
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
