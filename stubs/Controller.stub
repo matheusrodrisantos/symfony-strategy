@@ -1,29 +1,92 @@
 <?php
 
-namespace App\{{ Module }}\Controller;
+namespace App\{{module}}\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\{JsonResponse, Request, Response};
-use App\{{ Module }}\Service\{{ Module }}Service;
-use App\{{ Module }}\DTO\{{ Module }}InputDTO;
+use App\{{module}}\Service\{{module}}Service;
+use App\{{module}}\DTO\{{module}}InputDTO;
 use App\Shared\Service\ResponseService;
 use App\Shared\Validator\ValidatorJsonToDto;
 use Exception;
 
-class {{ Module }}Controller extends AbstractController
+class {{module}}Controller extends AbstractController
 {
     public function __construct(
-        private {{ Module }}Service ${{ module }}Service,
+        private {{module}}Service ${{variable}}Service,
         private ValidatorJsonToDto $validatorJsonToDto,
         private ResponseService $responseService
     ) {}
 
-    #[Route('/{{ routePrefix }}', name: 'app_{{ routePrefix }}_list', methods: ['GET'])]
+    #[Route('/{{routePrefix}}', name: 'app_{{routePrefix}}_list', methods: ['GET'])]
     public function list(): Response
     {
         try {
-            return $this->responseService->createSuccessResponse($this->{{ module }}Service->list(), Response::HTTP_OK);
+            return $this->responseService->createSuccessResponse(
+                $this->{{variable}}Service->list(),
+                Response::HTTP_OK
+            );
+        } catch (Exception $e) {
+            return $this->responseService->createErrorResponse($e->getMessage(), Response::HTTP_BAD_REQUEST);
+        }
+    }
+
+    #[Route('/{{routePrefix}}/{id}', name: 'app_{{routePrefix}}_get', methods: ['GET'], requirements: ['id' => '\d+'])]
+    public function listOneById(int $id): JsonResponse
+    {
+        try {
+            return $this->responseService->createSuccessResponse(
+                $this->{{variable}}Service->listById($id)->toArray(),
+                Response::HTTP_OK
+            );
+        } catch (Exception $e) {
+            return $this->responseService->createErrorResponse($e->getMessage(), Response::HTTP_BAD_REQUEST);
+        }
+    }
+
+    #[Route('/{{routePrefix}}', name: 'app_{{routePrefix}}_create', methods: ['POST'])]
+    public function create(Request $request): JsonResponse
+    {
+        try {
+            $inputDto = $this->validatorJsonToDto->validate(
+                data: $request->getContent(),
+                pathDtoClass: {{module}}InputDTO::class,
+                group: ['create']
+            );
+
+            $dtoOutput = $this->{{variable}}Service->save($inputDto);
+
+            return $this->responseService->createSuccessResponse($dtoOutput->toArray(), Response::HTTP_CREATED);
+        } catch (Exception $e) {
+            return $this->responseService->createErrorResponse($e->getMessage(), Response::HTTP_BAD_REQUEST);
+        }
+    }
+
+    #[Route('/{{routePrefix}}/{id}', name: 'app_{{routePrefix}}_update', methods: ['PUT'])]
+    public function update(int $id, Request $request): JsonResponse
+    {
+        try {
+            $inputDto = $this->validatorJsonToDto->validate(
+                data: $request->getContent(),
+                pathDtoClass: {{module}}InputDTO::class,
+                group: ['update']
+            );
+
+            $dtoOutput = $this->{{variable}}Service->update($id, $inputDto);
+
+            return $this->responseService->createSuccessResponse($dtoOutput->toArray(), Response::HTTP_CREATED);
+        } catch (Exception $e) {
+            return $this->responseService->createErrorResponse($e->getMessage(), Response::HTTP_BAD_REQUEST);
+        }
+    }
+
+    #[Route('/{{routePrefix}}/{id}', name: 'app_{{routePrefix}}_delete', methods: ['DELETE'])]
+    public function delete(int $id): Response
+    {
+        try {
+            $this->{{variable}}Service->delete($id);
+            return $this->responseService->createSuccessResponse(['DELETADO COM SUCESSO'], Response::HTTP_OK);
         } catch (Exception $e) {
             return $this->responseService->createErrorResponse($e->getMessage(), Response::HTTP_BAD_REQUEST);
         }
