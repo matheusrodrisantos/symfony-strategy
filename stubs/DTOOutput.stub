@@ -1,0 +1,13 @@
+<?php
+
+namespace App\{{ Module }}\DTO;
+
+use App\Shared\DTO\OutputDto;
+
+class {{ Module }}OutputDTO implements OutputDto
+{
+    public function toArray(): array
+    {
+        return [];
+    }
+}

@@ -1,0 +1,31 @@
+<?php
+
+namespace App\{{ Module }}\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\{JsonResponse, Request, Response};
+use App\{{ Module }}\Service\{{ Module }}Service;
+use App\{{ Module }}\DTO\{{ Module }}InputDTO;
+use App\Shared\Service\ResponseService;
+use App\Shared\Validator\ValidatorJsonToDto;
+use Exception;
+
+class {{ Module }}Controller extends AbstractController
+{
+    public function __construct(
+        private {{ Module }}Service ${{ module }}Service,
+        private ValidatorJsonToDto $validatorJsonToDto,
+        private ResponseService $responseService
+    ) {}
+
+    #[Route('/{{ routePrefix }}', name: 'app_{{ routePrefix }}_list', methods: ['GET'])]
+    public function list(): Response
+    {
+        try {
+            return $this->responseService->createSuccessResponse($this->{{ module }}Service->list(), Response::HTTP_OK);
+        } catch (Exception $e) {
+            return $this->responseService->createErrorResponse($e->getMessage(), Response::HTTP_BAD_REQUEST);
+        }
+    }
+}

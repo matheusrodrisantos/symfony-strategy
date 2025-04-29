@@ -1,18 +1,16 @@
 <?php
 
-namespace App\Registration\Entity;
+namespace App\{{ Module }}\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity()]
-class Registration
+class {{ Module }}
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-
-    // TODO: Adicionar outras propriedades
 
     public function getId(): ?int
     {

@@ -1,0 +1,31 @@
+<?php
+
+namespace App\{{ Module }}\Factory;
+
+use App\Shared\DTO\InputDto;
+use App\Shared\DTO\OutputDto;
+use App\{{ Module }}\Entity\{{ Module }};
+
+class {{ Module }}Factory
+{
+    public function createEntityFromDto(InputDto ${{ module }}InputDto)
+    {
+        // TODO: Mapear InputDto para Entity
+    }
+
+    public function updateEntityFromDto({{ Module }} ${{ module }}, InputDto ${{ module }}InputDto): {{ Module }}
+    {
+        // TODO: Atualizar dados da Entity a partir do InputDto
+        return ${{ module }};
+    }
+
+    public function createOutputDtoFromEntity({{ Module }} ${{ module }}): OutputDto
+    {
+        // TODO: Mapear Entity para OutputDto
+    }
+
+    public function createOutputDtoListFromEntities(array $entities): array
+    {
+        return array_map([$this, 'createOutputDtoFromEntity'], $entities);
+    }
+}

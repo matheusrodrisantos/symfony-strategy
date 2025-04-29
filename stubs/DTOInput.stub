@@ -1,0 +1,10 @@
+<?php
+
+namespace App\{{ Module }}\DTO;
+
+use App\Shared\DTO\InputDto;
+
+class {{ Module }}InputDTO implements InputDto
+{
+    // TODO: Adicionar propriedades e construtor
+}
