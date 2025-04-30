@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\{Request,Response};
 use Symfony\Component\Routing\Attribute\Route;
 
-use App\EventRcc\DTO\{EventRccInputDTO,EventRccOutputDTO};
+use App\EventRcc\DTO\EventRccInputDTO;
 use App\EventRcc\Service\EventRccService;
 use App\Shared\Validator\ValidatorJsonToDto;
 use App\Shared\Service\ResponseService;

@@ -3,6 +3,7 @@
 namespace App\{{ Module }}\DTO;
 
 use App\Shared\DTO\InputDto;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class {{ Module }}InputDTO implements InputDto
 {

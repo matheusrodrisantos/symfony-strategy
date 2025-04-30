@@ -1,14 +1,17 @@
 <?php
 
-namespace App\Participant\Entity;
+namespace App\User\Entity;
 
-use App\Participant\Repository\ParticipantRepository;
-use Doctrine\DBAL\Types\Types;
+
+use App\User\Repository\UserRepository;
+
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\DBAL\Types\Types;
 
-#[ORM\Entity(repositoryClass: ParticipantRepository::class)]
+
+#[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-class Participant
+class User
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -21,7 +24,7 @@ class Participant
     #[ORM\Column(length: 14)]
     private ?string $cpf = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     private ?\DateTimeInterface $dateOfBirth = null;
 
     #[ORM\Column(length: 255)]
@@ -133,3 +136,4 @@ class Participant
         return $this->updatedAt;
     }
 }
+
