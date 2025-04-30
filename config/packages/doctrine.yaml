@@ -24,12 +24,12 @@ doctrine:
                 dir: '%kernel.project_dir%/src/EventRcc/Entity'
                 prefix: 'App\EventRcc\Entity'
                 alias: EventRcc
-            Participant:
+            App:
                 is_bundle: false
                 type: attribute
-                dir: '%kernel.project_dir%/src/Participant/Entity'
-                prefix: 'App\Participant\Entity'
-                alias: Participant
+                dir: '%kernel.project_dir%/src/Entity'
+                prefix: 'App\Entity'
+                alias: App
 
         controller_resolver:
             auto_mapping: false
