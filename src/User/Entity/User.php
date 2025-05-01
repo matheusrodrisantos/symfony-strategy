@@ -2,6 +2,9 @@
 
 namespace App\User\Entity;
 
+use App\EventRegistration\Entity\EventRegistration;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 use App\User\Repository\UserRepository;
 
@@ -13,6 +16,11 @@ use Doctrine\DBAL\Types\Types;
 #[ORM\HasLifecycleCallbacks]
 class User
 {
+    public function __construct()
+    {    
+        $this->eventRegistrations = new ArrayCollection();
+    }
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -41,6 +49,10 @@ class User
 
     #[ORM\Column]
     private ?\DateTimeImmutable $updatedAt = null;
+
+
+    #[ORM\OneToMany(mappedBy: "user", targetEntity: EventRegistration::class, cascade: ["persist", "remove"])]
+    private Collection $eventRegistrations;
 
     public function getId(): ?int
     {
@@ -116,6 +128,33 @@ class User
     public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->createdAt;
+    }
+
+    public function getEventRegistrations(): Collection
+    {
+        return $this->eventRegistrations;
+    }
+
+    public function addEventRegistration(EventRegistration $eventRegistration): static
+    {
+        if (!$this->eventRegistrations->contains($eventRegistration)) {
+            $this->eventRegistrations[] = $eventRegistration;
+            $eventRegistration->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEventRegistration(EventRegistration $eventRegistration): static
+    {
+        if ($this->eventRegistrations->removeElement($eventRegistration)) {
+            // desfaz a ligação do lado do EventRegistration
+            if ($eventRegistration->getUser() === $this) {
+                $eventRegistration->setUser(null);
+            }
+        }
+
+        return $this;
     }
 
     #[ORM\PrePersist]

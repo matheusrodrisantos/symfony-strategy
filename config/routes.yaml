@@ -2,3 +2,7 @@ event_controllers:
     resource: '../src/EventRcc/Controller/'
     type: attribute
 
+user_controllers:
+    resource: '../src/User/Controller/'
+    type: attribute
+
