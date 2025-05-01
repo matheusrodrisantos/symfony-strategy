@@ -6,6 +6,7 @@ namespace App\EventRegistration\Entity;
 use App\EventRegistration\Repository\EventRegistrationRepository;
 
 use App\User\Entity\User;
+use App\Event\Entity\Event;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\DBAL\Types\Types;
@@ -23,6 +24,10 @@ class EventRegistration
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: "eventRegistrations")]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
+
+    #[ORM\ManyToOne(targetEntity: Event::class, inversedBy: "eventRegistrations")]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Event $event = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
@@ -45,6 +50,18 @@ class EventRegistration
         $this->user = $user;
         return $this;
     }
+
+    public function getEvent(): ?Event
+    {
+        return $this->event;
+    }
+
+    public function setEvent(?Event $event): static
+    {
+        $this->event = $event;
+        return $this;
+    }
+
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {

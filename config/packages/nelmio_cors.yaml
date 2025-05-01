@@ -1,0 +1,11 @@
+nelmio_cors:
+    defaults:
+        allow_origin: ['*']            # Libera para qualquer origem
+        origin_regex: false            # Desliga regex, já que usamos '*'
+        allow_credentials: false       # Precisa ser false com '*' (requerido pelas regras CORS)
+        allow_methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']
+        allow_headers: ['Content-Type', 'Authorization']
+        expose_headers: ['Link']
+        max_age: 3600
+    paths:
+        '^/': ~                        # Aplica para todas as rotas

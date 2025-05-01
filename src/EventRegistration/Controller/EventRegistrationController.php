@@ -19,7 +19,7 @@ class EventRegistrationController extends AbstractController
         private ResponseService $responseService
     ) {}
 
-    #[Route('/eventregistration', name: 'app_eventregistration_list', methods: ['GET'])]
+    #[Route('/event-registration', name: 'app_eventregistration_list', methods: ['GET'])]
     public function list(): Response
     {
         try {
@@ -32,7 +32,7 @@ class EventRegistrationController extends AbstractController
         }
     }
 
-    #[Route('/eventregistration/{id}', name: 'app_eventregistration_get', methods: ['GET'], requirements: ['id' => '\d+'])]
+    #[Route('/event-registration/{id}', name: 'app_eventregistration_get', methods: ['GET'], requirements: ['id' => '\d+'])]
     public function listOneById(int $id): JsonResponse
     {
         try {
@@ -45,7 +45,7 @@ class EventRegistrationController extends AbstractController
         }
     }
 
-    #[Route('/eventregistration', name: 'app_eventregistration_create', methods: ['POST'])]
+    #[Route('/event-registration', name: 'app_eventregistration_create', methods: ['POST'])]
     public function create(Request $request): JsonResponse
     {
         try {
@@ -63,7 +63,7 @@ class EventRegistrationController extends AbstractController
         }
     }
 
-    #[Route('/eventregistration/{id}', name: 'app_eventregistration_update', methods: ['PUT'])]
+    #[Route('/event-registration/{id}', name: 'app_eventregistration_update', methods: ['PUT'])]
     public function update(int $id, Request $request): JsonResponse
     {
         try {
@@ -81,7 +81,7 @@ class EventRegistrationController extends AbstractController
         }
     }
 
-    #[Route('/eventregistration/{id}', name: 'app_eventregistration_delete', methods: ['DELETE'])]
+    #[Route('/event-registration/{id}', name: 'app_eventregistration_delete', methods: ['DELETE'])]
     public function delete(int $id): Response
     {
         try {

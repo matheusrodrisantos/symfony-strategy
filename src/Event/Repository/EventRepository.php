@@ -1,32 +1,32 @@
 <?php
 
-namespace App\EventRcc\Repository;
+namespace App\Event\Repository;
 
-use App\EventRcc\Entity\EventRcc;
+use App\Event\Entity\Event;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
 
 
 /**
- * @extends ServiceEntityRepository<EventRcc>
+ * @extends ServiceEntityRepository<Event>
  */
-class EventRccRepository extends ServiceEntityRepository
+class EventRepository extends ServiceEntityRepository
 {
     public function __construct(
         ManagerRegistry $registry,
         private EntityManagerInterface $em
     ){
-        parent::__construct($registry, EventRcc::class);
+        parent::__construct($registry, Event::class);
     }
 
-    public function save(EventRcc $event) : void {
+    public function save(Event $event) : void {
 
         $this->em->persist($event);
         $this->em->flush();
     }
 
-    public function update(EventRcc $event):void{
+    public function update(Event $event):void{
        
         $this->em->persist($event);
         $this->em->flush();
@@ -37,13 +37,13 @@ class EventRccRepository extends ServiceEntityRepository
         $event = $this->find($id);
 
         if (!$event) {
-            throw new \Exception("EventRcc com ID {$id} não encontrado");
+            throw new \Exception("Event com ID {$id} não encontrado");
         }
 
         return $event;
     }
 
-    public function delete(EventRcc $event): void{
+    public function delete(Event $event): void{
         $this->em->remove($event);
         $this->em->flush();
     }

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Voluntary\Controller;
+namespace App\User\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\{JsonResponse, Request, Response};
-use App\Voluntary\Service\VoluntaryService;
-use App\Voluntary\DTO\VoluntaryInputDTO;
+use App\User\Service\VoluntaryService;
+use App\User\DTO\VoluntaryInputDTO;
 use App\Shared\Service\ResponseService;
 use App\Shared\Validator\ValidatorJsonToDto;
 use Exception;

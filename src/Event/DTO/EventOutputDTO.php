@@ -1,9 +1,9 @@
 <?php
 
-namespace App\EventRcc\DTO;
+namespace App\Event\DTO;
 use App\Shared\DTO\OutputDto;
 
-class EventRccOutputDTO implements OutputDto
+class EventOutputDTO implements OutputDto
 {
     
     public function __construct(

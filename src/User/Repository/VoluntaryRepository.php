@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Voluntary\Repository;
+namespace App\User\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use App\Voluntary\Entity\Voluntary;
+use App\User\Entity\Voluntary;
 
 class VoluntaryRepository extends ServiceEntityRepository
 {

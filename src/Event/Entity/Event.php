@@ -1,15 +1,17 @@
 <?php
 
-namespace App\EventRcc\Entity;
+namespace App\Event\Entity;
 
-use App\EventRcc\Repository\EventRccRepository;
-
+use App\Event\Repository\EventRepository;
+use App\EventRegistration\Entity\EventRegistration;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
-#[ORM\Entity(repositoryClass: EventRccRepository::class)]
+#[ORM\Entity(repositoryClass: EventRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-class EventRcc
+class Event
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -22,7 +24,7 @@ class EventRcc
     #[ORM\Column(length: 255)]
     private ?string $type = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column]
     private ?bool $free = null;
 
     #[ORM\Column]
@@ -46,8 +48,12 @@ class EventRcc
     #[ORM\Column]
     private ?\DateTimeImmutable $updatedAt = null;
 
+    #[ORM\OneToMany(mappedBy: "event", targetEntity: EventRegistration::class, cascade: ["persist", "remove"], orphanRemoval: true)]
+    private Collection $eventRegistrations;
+
     public function __construct()
     {
+        $this->eventRegistrations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -63,7 +69,6 @@ class EventRcc
     public function setName(string $name): static
     {
         $this->name = $name;
-
         return $this;
     }
 
@@ -75,7 +80,6 @@ class EventRcc
     public function setType(string $type): static
     {
         $this->type = $type;
-
         return $this;
     }
 
@@ -87,7 +91,6 @@ class EventRcc
     public function setFree(bool $free): static
     {
         $this->free = $free;
-
         return $this;
     }
 
@@ -99,7 +102,6 @@ class EventRcc
     public function setValue(float $value): static
     {
         $this->value = $value;
-
         return $this;
     }
 
@@ -111,7 +113,6 @@ class EventRcc
     public function setStartDate(\DateTimeInterface $startDate): static
     {
         $this->startDate = $startDate;
-
         return $this;
     }
 
@@ -123,7 +124,6 @@ class EventRcc
     public function setEndDate(\DateTimeInterface $endDate): static
     {
         $this->endDate = $endDate;
-
         return $this;
     }
 
@@ -135,7 +135,6 @@ class EventRcc
     public function setOnline(bool $online): static
     {
         $this->online = $online;
-
         return $this;
     }
 
@@ -144,10 +143,9 @@ class EventRcc
         return $this->inPerson;
     }
 
-    public function setinPerson(bool $inPerson): static
+    public function setInPerson(bool $inPerson): static
     {
         $this->inPerson = $inPerson;
-
         return $this;
     }
 
@@ -156,6 +154,10 @@ class EventRcc
         return $this->createdAt;
     }
 
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
 
     #[ORM\PrePersist]
     public function setCreatedAtValue(): void
@@ -170,10 +172,32 @@ class EventRcc
         $this->updatedAt = new \DateTimeImmutable();
     }
 
-    public function getUpdatedAt(): ?\DateTimeImmutable
+    /**
+     * @return Collection<int, EventRegistration>
+     */
+    public function getEventRegistrations(): Collection
     {
-        return $this->updatedAt;
+        return $this->eventRegistrations;
     }
 
-    
+    public function addEventRegistration(EventRegistration $registration): static
+    {
+        if (!$this->eventRegistrations->contains($registration)) {
+            $this->eventRegistrations[] = $registration;
+            $registration->setEvent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEventRegistration(EventRegistration $registration): static
+    {
+        if ($this->eventRegistrations->removeElement($registration)) {
+            if ($registration->getEvent() === $this) {
+                $registration->setEvent(null);
+            }
+        }
+
+        return $this;
+    }
 }

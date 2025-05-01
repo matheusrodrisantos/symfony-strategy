@@ -50,8 +50,7 @@ class User
     #[ORM\Column]
     private ?\DateTimeImmutable $updatedAt = null;
 
-
-    #[ORM\OneToMany(mappedBy: "user", targetEntity: EventRegistration::class, cascade: ["persist", "remove"])]
+    #[ORM\OneToMany(mappedBy: "user", targetEntity: EventRegistration::class)]
     private Collection $eventRegistrations;
 
     public function getId(): ?int

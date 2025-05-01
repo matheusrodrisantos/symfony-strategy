@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Voluntary\DTO;
+namespace App\User\DTO;
 
 use App\Shared\DTO\InputDto;
 

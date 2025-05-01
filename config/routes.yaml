@@ -1,5 +1,5 @@
 event_controllers:
-    resource: '../src/EventRcc/Controller/'
+    resource: '../src/Event/Controller/'
     type: attribute
 
 user_controllers:

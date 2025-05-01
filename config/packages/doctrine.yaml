@@ -18,12 +18,12 @@ doctrine:
             Doctrine\DBAL\Platforms\PostgreSQLPlatform: identity
         auto_mapping: false
         mappings:
-            EventRcc:
+            Event:
                 is_bundle: false
                 type: attribute
-                dir: '%kernel.project_dir%/src/EventRcc/Entity'
-                prefix: 'App\EventRcc\Entity'
-                alias: EventRcc
+                dir: '%kernel.project_dir%/src/Event/Entity'
+                prefix: 'App\Event\Entity'
+                alias: Event
             User:
                 is_bundle: false
                 type: attribute
@@ -34,7 +34,7 @@ doctrine:
                 is_bundle: false
                 type: attribute
                 dir: '%kernel.project_dir%/src/EventRegistration/Entity'
-                prefix: 'App\User\Entity'
+                prefix: 'App\EventRegistration\Entity'
                 alias: EventRegistration
 
         controller_resolver:

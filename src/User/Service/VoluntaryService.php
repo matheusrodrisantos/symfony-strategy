@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Voluntary\Service;
+namespace App\User\Service;
 
 use App\Shared\Service\ServiceCrudInterface;
 use App\Shared\DTO\InputDto;

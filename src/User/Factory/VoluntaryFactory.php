@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Voluntary\Factory;
+namespace App\User\Factory;
 
 use App\Shared\DTO\InputDto;
 use App\Shared\DTO\OutputDto;
-use App\Voluntary\Entity\Voluntary;
+use App\User\Entity\Voluntary;
 
 class VoluntaryFactory
 {

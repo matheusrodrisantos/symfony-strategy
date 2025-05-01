@@ -1,11 +1,11 @@
 <?php
 
-namespace App\EventRcc\DTO;
+namespace App\Event\DTO;
 
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Shared\DTO\InputDto;
 
-class EventRccInputDTO implements InputDto
+class EventInputDTO implements InputDto
 {
     #[Assert\NotBlank(message: "O nome é obrigatório.", groups: ['create'])]
     #[Assert\Length(min: 2, max: 255, minMessage: "O nome deve ter pelo menos {{ limit }} caracteres.", groups: ['create', 'update'])]

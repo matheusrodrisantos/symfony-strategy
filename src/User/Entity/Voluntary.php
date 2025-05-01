@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Voluntary\Entity;
+namespace App\User\Entity;
 
 
-use App\Voluntary\Repository\VoluntaryRepository;
+use App\User\Repository\VoluntaryRepository;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\DBAL\Types\Types;

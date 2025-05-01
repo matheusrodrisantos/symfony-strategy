@@ -1,21 +1,21 @@
 <?php
 
-namespace App\EventRcc\Controller;
+namespace App\Event\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\{Request,Response};
 use Symfony\Component\Routing\Attribute\Route;
 
-use App\EventRcc\DTO\EventRccInputDTO;
-use App\EventRcc\Service\EventRccService;
+use App\Event\DTO\EventInputDTO;
+use App\Event\Service\EventService;
 use App\Shared\Validator\ValidatorJsonToDto;
 use App\Shared\Service\ResponseService;
 
-final class EventRccController extends AbstractController
+final class EventController extends AbstractController
 {
     public function __construct(
-        private EventRccService $eventRccService,
+        private EventService $eventService,
         private ValidatorJsonToDto $validatorJsonToDto,
         private ResponseService $responseService
     ){ }
@@ -24,15 +24,15 @@ final class EventRccController extends AbstractController
     public function create(Request $request): JsonResponse
     {
         try{
-            $eventRccDto=$this->validatorJsonToDto->validate(
+            $eventDto=$this->validatorJsonToDto->validate(
                 data:$request->getContent(),
-                pathDtoClass:EventRccInputDTO::class,
+                pathDtoClass:EventInputDTO::class,
                 group:['create']
             );
 
-            $eventRccOutputc=$this->eventRccService->save($eventRccDto);
+            $eventOutputc=$this->eventService->save($eventDto);
 
-            return $this->responseService->createSuccessResponse($eventRccOutputc->toArray(),Response::HTTP_CREATED); 
+            return $this->responseService->createSuccessResponse($eventOutputc->toArray(),Response::HTTP_CREATED); 
 
         }catch(\Exception $e){
             return $this->json('ERROR !'.$e->getMessage());   
@@ -44,13 +44,13 @@ final class EventRccController extends AbstractController
     {
         try{
             
-            $eventRccDto=$this->validatorJsonToDto->validate(
+            $eventDto=$this->validatorJsonToDto->validate(
                 data:$request->getContent(),
-                pathDtoClass:EventRccInputDTO::class,
+                pathDtoClass:EventInputDTO::class,
                 group:['update']
             );
           
-            $dtoOutput=$this->eventRccService->update($id, $eventRccDto);
+            $dtoOutput=$this->eventService->update($id, $eventDto);
 
             return $this->responseService->createSuccessResponse($dtoOutput->toArray(),Response::HTTP_CREATED); 
 
@@ -67,7 +67,7 @@ final class EventRccController extends AbstractController
     public function delete(int $id): JsonResponse
     {
         try{
-            $this->eventRccService->delete($id);
+            $this->eventService->delete($id);
             return $this->responseService->createSuccessResponse(['DELETADO COM SUCESSO'],Response::HTTP_OK);
         }catch(\Exception $e){
 
@@ -80,7 +80,7 @@ final class EventRccController extends AbstractController
     public function list(): JsonResponse
     {
         try{
-            return $this->responseService->createSuccessResponse($this->eventRccService->list(),Response::HTTP_OK);
+            return $this->responseService->createSuccessResponse($this->eventService->list(),Response::HTTP_OK);
         }catch(\Exception $e){
             return $this->responseService->createErrorResponse($e->getMessage(),Response::HTTP_BAD_REQUEST);
         }
@@ -93,7 +93,7 @@ final class EventRccController extends AbstractController
     public function listOneById(int $id): JsonResponse
     {
         try{
-            return $this->responseService->createSuccessResponse($this->eventRccService->listById($id)
+            return $this->responseService->createSuccessResponse($this->eventService->listById($id)
                 ->toArray(),Response::HTTP_OK);
         }catch(\Exception $e){
             return $this->responseService->createErrorResponse($e->getMessage(),Response::HTTP_BAD_REQUEST);
