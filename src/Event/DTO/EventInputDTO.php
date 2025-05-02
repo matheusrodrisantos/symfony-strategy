@@ -28,11 +28,13 @@ class EventInputDTO implements InputDto
 
     #[Assert\NotNull(message: "A data de início é obrigatória.", groups: ['create'])]
     #[Assert\Type(type: \DateTimeImmutable::class, message: "A data de início deve ser uma data válida.", groups: ['create', 'update'])]
-    #[Assert\GreaterThanOrEqual('tomorrow')]
+    #[Assert\GreaterThanOrEqual('tomorrow',groups:['create','update'])]
     public readonly ?\DateTimeImmutable $startDate;
 
     #[Assert\NotNull(message: "A data de fim é obrigatória.", groups: ['create'])]
-    #[Assert\GreaterThan(propertyPath: 'startDate',message:'A data do final deve ser maior que a data do inicio')]
+    #[Assert\GreaterThan(propertyPath: 'startDate',
+        groups:['create','update'],
+        message:'A data final deve ser maior que a data do inicio')]
     #[Assert\Type(type: \DateTimeImmutable::class, message: "A data de fim deve ser uma data válida.", groups: ['create', 'update'])]
     public readonly ?\DateTimeImmutable $endDate;
 
