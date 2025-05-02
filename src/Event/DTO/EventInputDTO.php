@@ -2,8 +2,9 @@
 
 namespace App\Event\DTO;
 
-use App\Event\Validator\FreeEventCannotHaveValue;
-use App\Event\Validator\PaidEventMustCostMoreThanZero;
+use App\Event\Validator\{FreeEventCannotHaveValue,
+    PaidEventMustCostMoreThanZero};
+
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Shared\DTO\InputDto;
 
@@ -27,9 +28,11 @@ class EventInputDTO implements InputDto
 
     #[Assert\NotNull(message: "A data de início é obrigatória.", groups: ['create'])]
     #[Assert\Type(type: \DateTimeImmutable::class, message: "A data de início deve ser uma data válida.", groups: ['create', 'update'])]
+    #[Assert\GreaterThanOrEqual('tomorrow')]
     public readonly ?\DateTimeImmutable $startDate;
 
     #[Assert\NotNull(message: "A data de fim é obrigatória.", groups: ['create'])]
+    #[Assert\GreaterThan(propertyPath: 'startDate',message:'A data do final deve ser maior que a data do inicio')]
     #[Assert\Type(type: \DateTimeImmutable::class, message: "A data de fim deve ser uma data válida.", groups: ['create', 'update'])]
     public readonly ?\DateTimeImmutable $endDate;
 

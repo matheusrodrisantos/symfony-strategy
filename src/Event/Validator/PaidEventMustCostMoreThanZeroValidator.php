@@ -12,7 +12,7 @@ class PaidEventMustCostMoreThanZeroValidator extends ConstraintValidator
     public function validate(mixed $dto, Constraint $constraint)
     {
         if (!$dto instanceof EventInputDTO) {
-            return;
+            throw new \InvalidArgumentException('must be to class '.EventInputDTO::class);
         }
 
         if ($dto->free == false && $dto->value <= 0) {
