@@ -35,7 +35,6 @@ class ValidatorJsonToDto{
         }
 
         return $inputDto;
-
     }
 
 }

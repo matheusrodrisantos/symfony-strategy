@@ -2,9 +2,13 @@
 
 namespace App\Event\DTO;
 
+use App\Event\Validator\FreeEventCannotHaveValue;
+use App\Event\Validator\PaidEventMustCostMoreThanZero;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Shared\DTO\InputDto;
 
+#[FreeEventCannotHaveValue(groups: ['create', 'update'])]
+#[PaidEventMustCostMoreThanZero(groups: ['create', 'update'])]
 class EventInputDTO implements InputDto
 {
     #[Assert\NotBlank(message: "O nome é obrigatório.", groups: ['create'])]

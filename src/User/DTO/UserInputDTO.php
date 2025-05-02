@@ -24,6 +24,7 @@ class UserInputDTO implements InputDto
         #[Assert\Email]
         public readonly string $email,
 
+        #[Assert\NotBlank]
         #[Assert\Length(max: 20)]
         public readonly ?string $phoneNumber,
 

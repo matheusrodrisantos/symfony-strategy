@@ -68,13 +68,40 @@ class EventRegistration
         return $this;
     }
 
-    public function getValue():?float {
+    public function getValue():?float 
+    {
         return $this->value;
     }
 
     public function setValue(?float $value): ?static
     {
         $this->value=$value;
+        return $this;
+    }
+
+    public function getValuePaid() : ?float {
+        return $this->valuePaid;
+    }
+
+    public function setValuePaid( ? float $valuePaid) : ?static{
+        $this->valuePaid=$valuePaid;
+        return $this;
+    }
+
+    public function getStatus(){
+        return $this->status;
+    }
+
+    public function setStatus(?string $status): ?static {
+
+        $this->status = match($status){
+            null => throw new \InvalidArgumentException("Status não pode ser nulo"),
+            self::STATUS_CANCELED,
+            self::STATUS_PAID,
+            self::STATUS_PENDING =>$status,
+            default => throw new \InvalidArgumentException("Status inválido: $status"),
+        };
+        
         return $this;
     }
 
@@ -108,7 +135,7 @@ class EventRegistration
     }
 
     #[ORM\PreUpdate]
-    public function setUpadteAtValue(): void
+    public function setUpdateAtValue(): void
     {
         $this->updatedAt = new \DateTimeImmutable();
     }

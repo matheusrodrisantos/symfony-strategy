@@ -11,13 +11,15 @@ use App\Event\DTO\EventInputDTO;
 use App\Event\Service\EventService;
 use App\Shared\Validator\ValidatorJsonToDto;
 use App\Shared\Service\ResponseService;
+use Psr\Log\LoggerInterface;
 
 final class EventController extends AbstractController
 {
     public function __construct(
         private EventService $eventService,
         private ValidatorJsonToDto $validatorJsonToDto,
-        private ResponseService $responseService
+        private ResponseService $responseService,
+        private LoggerInterface $logger
     ){ }
 
     #[Route('/event', name: 'app_event_create', methods:['POST'])]
