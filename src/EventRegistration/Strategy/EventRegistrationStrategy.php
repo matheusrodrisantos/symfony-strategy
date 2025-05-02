@@ -7,9 +7,6 @@ use App\User\Entity\User;
 
 interface EventRegistrationStrategyInterface
 {
-    public function register(Event $event, User $user): void;
+    public function canRegister(Event $event, User $user): bool;
 
-    //public function unregister(Event $event, User $user): void;
-
-    //public function isRegistered(Event $event, User $user): bool;
 }

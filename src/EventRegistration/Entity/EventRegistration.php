@@ -11,11 +11,14 @@ use App\Event\Entity\Event;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\DBAL\Types\Types;
 
-
 #[ORM\Entity(repositoryClass: EventRegistrationRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 class EventRegistration
 {
+    public const STATUS_PENDING = 'PENDING';
+    public const STATUS_PAID = 'PAID';
+    public const STATUS_CANCELED = 'CANCELED';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -29,11 +32,25 @@ class EventRegistration
     #[ORM\JoinColumn(nullable: false)]
     private ?Event $event = null;
 
+    #[ORM\Column(nullable:false)]
+    private ?float $value = null;
+
+    #[ORM\Column(nullable:true)]
+    private ?float $valuePaid = null;
+
+    #[ORM\Column(nullable: false)]
+    private ?string $status = null;
+
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $updatedAt = null;
+
+    public function __construct()
+    {
+        $this->status=self::STATUS_PENDING;
+    }
 
     public function getId(): ?int
     {
@@ -48,6 +65,16 @@ class EventRegistration
     public function setUser(?User $user): static
     {
         $this->user = $user;
+        return $this;
+    }
+
+    public function getValue():?float {
+        return $this->value;
+    }
+
+    public function setValue(?float $value): ?static
+    {
+        $this->value=$value;
         return $this;
     }
 

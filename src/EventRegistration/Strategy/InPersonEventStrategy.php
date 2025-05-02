@@ -7,6 +7,8 @@ use App\User\Entity\User;
 
 class InPersonEventStrategy implements EventRegistrationStrategyInterface{
     
-    public function register(Event $event, User $user): void
-    {}
+    public function canRegister(Event $event, User $user): bool
+    {
+        return $event->getEventRegistrations()->count()<100;
+    }
 }
