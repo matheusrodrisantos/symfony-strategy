@@ -37,8 +37,10 @@ class UserFactory
             throw new \InvalidArgumentException("Invalid DTO type");
         }
 
+        $cpf = new Cpf($userInputDto->cpf);
+
         $user->setName($userInputDto->name)
-            ->setCpf($userInputDto->cpf)
+            ->setCpf($cpf)
             ->setDateOfBirth(new \DateTimeImmutable($userInputDto->dateOfBirth))
             ->setEmail($userInputDto->email)
             ->setPhoneNumber($userInputDto->phoneNumber)
