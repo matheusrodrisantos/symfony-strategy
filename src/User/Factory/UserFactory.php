@@ -4,9 +4,11 @@ namespace App\User\Factory;
 
 use App\Shared\DTO\InputDto;
 use App\Shared\DTO\OutputDto;
+use App\Shared\ObjectValue\Cpf;
 use App\User\Entity\User;
 use App\User\DTO\UserInputDTO;
 use App\User\DTO\UserOutputDTO;
+
 
 class UserFactory
 {
@@ -16,9 +18,11 @@ class UserFactory
             throw new \InvalidArgumentException("Invalid DTO type");
         }
 
+        $cpf = new Cpf($userInputDto->cpf);
+
         $user = new User();
         $user->setName($userInputDto->name)
-            ->setCpf($userInputDto->cpf)
+            ->setCpf($cpf)
             ->setDateOfBirth(new \DateTimeImmutable($userInputDto->dateOfBirth))
             ->setEmail($userInputDto->email)
             ->setPhoneNumber($userInputDto->phoneNumber)
