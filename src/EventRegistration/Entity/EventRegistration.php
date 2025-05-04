@@ -8,6 +8,8 @@ use App\EventRegistration\Repository\EventRegistrationRepository;
 use App\User\Entity\User;
 use App\Event\Entity\Event;
 
+use App\EventRegistration\ObjectValue\Status;
+
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\DBAL\Types\Types;
 
@@ -15,9 +17,6 @@ use Doctrine\DBAL\Types\Types;
 #[ORM\HasLifecycleCallbacks]
 class EventRegistration
 {
-    public const STATUS_PENDING = 'PENDING';
-    public const STATUS_PAID = 'PAID';
-    public const STATUS_CANCELED = 'CANCELED';
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -39,7 +38,7 @@ class EventRegistration
     private ?float $valuePaid = null;
 
     #[ORM\Column(nullable: false)]
-    private ?string $status = null;
+    private ?Status $status = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
@@ -47,9 +46,9 @@ class EventRegistration
     #[ORM\Column]
     private ?\DateTimeImmutable $updatedAt = null;
 
-    public function __construct()
-    {
-        $this->status=self::STATUS_PENDING;
+    public function __construct(Status $status)
+    {      
+        $this->status=$status;
     }
 
     public function getId(): ?int
@@ -92,18 +91,7 @@ class EventRegistration
         return $this->status;
     }
 
-    public function setStatus(?string $status): ?static {
-
-        $this->status = match($status){
-            null => throw new \InvalidArgumentException("Status não pode ser nulo"),
-            self::STATUS_CANCELED,
-            self::STATUS_PAID,
-            self::STATUS_PENDING =>$status,
-            default => throw new \InvalidArgumentException("Status inválido: $status"),
-        };
-        
-        return $this;
-    }
+    
 
     public function getEvent(): ?Event
     {
