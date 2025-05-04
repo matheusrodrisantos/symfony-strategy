@@ -2,7 +2,10 @@
 
 namespace App\EventRegistration\ObjectValue;
 
+use Doctrine\ORM\Mapping\Embeddable;
+use Doctrine\ORM\Mapping\Column;
 
+#[Embeddable]
 class Status{
 
     public const STATUS_PENDING = 'PENDING';
@@ -10,6 +13,7 @@ class Status{
     public const STATUS_CANCELED = 'CANCELED';
 
     public function __construct(
+        #[Column(type: "string")]
         private string $status
     ){}
 

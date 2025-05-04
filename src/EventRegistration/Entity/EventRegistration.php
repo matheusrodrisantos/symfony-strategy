@@ -10,8 +10,10 @@ use App\Event\Entity\Event;
 
 use App\EventRegistration\ObjectValue\Status;
 
+use Doctrine\ORM\Mapping\Embeddable;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping\Embedded;
 
 #[ORM\Entity(repositoryClass: EventRegistrationRepository::class)]
 #[ORM\HasLifecycleCallbacks]
@@ -37,7 +39,7 @@ class EventRegistration
     #[ORM\Column(nullable:true)]
     private ?float $valuePaid = null;
 
-    #[ORM\Column(nullable: false)]
+    #[Embedded(class:Status::class)]
     private ?Status $status = null;
 
     #[ORM\Column]
