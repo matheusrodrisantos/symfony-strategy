@@ -1,6 +1,6 @@
 <?php
 
-namespace App\EventRegistration\ObjectValue;
+namespace App\EventRegistration\Entity;
 
 use Doctrine\ORM\Mapping\Embeddable;
 use Doctrine\ORM\Mapping\Column;
@@ -25,7 +25,6 @@ class Status{
             self::STATUS_PENDING =>$this->status,
             default => throw new \InvalidArgumentException("Status inválido: $this->status"),
         };
-
     }
     
     public function __toString(){

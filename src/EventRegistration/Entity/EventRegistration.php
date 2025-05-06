@@ -7,10 +7,8 @@ use App\EventRegistration\Repository\EventRegistrationRepository;
 
 use App\User\Entity\User;
 use App\Event\Entity\Event;
-
-use App\EventRegistration\ObjectValue\Status;
-
-use Doctrine\ORM\Mapping\Embeddable;
+use App\EventRegistration\Entity\Money;
+use App\EventRegistration\Entity\Status;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Embedded;
@@ -34,13 +32,10 @@ class EventRegistration
     private ?Event $event = null;
 
     #[ORM\Column(nullable:false)]
-    private ?float $value = null;
-
-    #[ORM\Column(nullable:true)]
-    private ?float $valuePaid = null;
+    private ?Money $money = null;
 
     #[Embedded(class:Status::class)]
-    private ?Status $status = null;
+    private ?Status $status;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
@@ -48,8 +43,11 @@ class EventRegistration
     #[ORM\Column]
     private ?\DateTimeImmutable $updatedAt = null;
 
-    public function __construct(Status $status)
-    {      
+    public function __construct(
+        Status $status, 
+        Money $money
+    ){  
+        $this->money=$money;
         $this->status=$status;
     }
 
@@ -71,29 +69,17 @@ class EventRegistration
 
     public function getValue():?float 
     {
-        return $this->value;
+        return $this->money->getValue();
     }
 
-    public function setValue(?float $value): ?static
+    public function getValuePaid():?float 
     {
-        $this->value=$value;
-        return $this;
+        return $this->money->getValuePaid();
     }
-
-    public function getValuePaid() : ?float {
-        return $this->valuePaid;
-    }
-
-    public function setValuePaid( ? float $valuePaid) : ?static{
-        $this->valuePaid=$valuePaid;
-        return $this;
-    }
-
-    public function getStatus(){
+    
+    public function getStatus():? Status {
         return $this->status;
     }
-
-    
 
     public function getEvent(): ?Event
     {

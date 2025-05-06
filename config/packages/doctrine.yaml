@@ -36,6 +36,7 @@ doctrine:
                 dir: '%kernel.project_dir%/src/EventRegistration/Entity'
                 prefix: 'App\EventRegistration\Entity'
                 alias: EventRegistration
+            
 
         controller_resolver:
             auto_mapping: false
