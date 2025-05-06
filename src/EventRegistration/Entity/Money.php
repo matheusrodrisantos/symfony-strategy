@@ -9,14 +9,12 @@ use Exception;
 #[Embeddable]
 class Money{
         
-        #[Column(type: "int")]
-        private int $value;
-
-        #[Column(type: "int")]
-        private int $valuePaid;
     public function __construct(
+        #[Column(type: "integer")]
+        private int $value,
 
-        
+        #[Column(type: "integer")]
+        private int $valuePaid
     ){     
         $this->validate();
     }

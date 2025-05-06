@@ -10,15 +10,16 @@ use App\User\Repository\UserRepository;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\DBAL\Types\Types;
-
+use App\User\Entity\Cpf;
+use Doctrine\ORM\Mapping\Embedded;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 class User
 {
-    public function __construct()
-    {    
+    public function __construct(Cpf $cpf){    
         $this->eventRegistrations = new ArrayCollection();
+        $this->cpf=$cpf;
     }
 
     #[ORM\Id]
@@ -29,8 +30,8 @@ class User
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 14)]
-    private ?string $cpf = null;
+    #[Embedded(class:Cpf::class, columnPrefix:false)]
+    private ?Cpf $cpf = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     private ?\DateTimeInterface $dateOfBirth = null;
@@ -72,12 +73,6 @@ class User
     public function getCpf(): ?string
     {
         return $this->cpf;
-    }
-
-    public function setCpf(string $cpf): static
-    {
-        $this->cpf = $cpf;
-        return $this;
     }
 
     public function getDateOfBirth(): ?\DateTimeInterface

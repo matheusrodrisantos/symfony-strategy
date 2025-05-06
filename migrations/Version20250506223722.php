@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20250506001135 extends AbstractMigration
+final class Version20250506223722 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -28,9 +28,9 @@ final class Version20250506001135 extends AbstractMigration
             )
         SQL);
         $this->addSql(<<<'SQL'
-            CREATE TABLE event_registration (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, user_id INTEGER NOT NULL, event_id INTEGER NOT NULL, money VARCHAR(255) NOT NULL, created_at DATETIME NOT NULL --(DC2Type:datetime_immutable)
+            CREATE TABLE event_registration (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, user_id INTEGER NOT NULL, event_id INTEGER NOT NULL, created_at DATETIME NOT NULL --(DC2Type:datetime_immutable)
             , updated_at DATETIME NOT NULL --(DC2Type:datetime_immutable)
-            , status_status VARCHAR(255) NOT NULL, CONSTRAINT FK_8FBBAD54A76ED395 FOREIGN KEY (user_id) REFERENCES user (id) NOT DEFERRABLE INITIALLY IMMEDIATE, CONSTRAINT FK_8FBBAD5471F7E88B FOREIGN KEY (event_id) REFERENCES event (id) NOT DEFERRABLE INITIALLY IMMEDIATE)
+            , value INTEGER NOT NULL, value_paid INTEGER NOT NULL, status VARCHAR(255) NOT NULL, CONSTRAINT FK_8FBBAD54A76ED395 FOREIGN KEY (user_id) REFERENCES user (id) NOT DEFERRABLE INITIALLY IMMEDIATE, CONSTRAINT FK_8FBBAD5471F7E88B FOREIGN KEY (event_id) REFERENCES event (id) NOT DEFERRABLE INITIALLY IMMEDIATE)
         SQL);
         $this->addSql(<<<'SQL'
             CREATE INDEX IDX_8FBBAD54A76ED395 ON event_registration (user_id)
@@ -39,10 +39,10 @@ final class Version20250506001135 extends AbstractMigration
             CREATE INDEX IDX_8FBBAD5471F7E88B ON event_registration (event_id)
         SQL);
         $this->addSql(<<<'SQL'
-            CREATE TABLE user (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name VARCHAR(255) NOT NULL, cpf VARCHAR(14) NOT NULL, date_of_birth DATE NOT NULL --(DC2Type:date_immutable)
+            CREATE TABLE user (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name VARCHAR(255) NOT NULL, date_of_birth DATE NOT NULL --(DC2Type:date_immutable)
             , email VARCHAR(255) NOT NULL, phone_number VARCHAR(20) DEFAULT NULL, lgpd_acceptance BOOLEAN NOT NULL, created_at DATETIME NOT NULL --(DC2Type:datetime_immutable)
             , updated_at DATETIME NOT NULL --(DC2Type:datetime_immutable)
-            )
+            , cpf VARCHAR(255) NOT NULL)
         SQL);
         $this->addSql(<<<'SQL'
             CREATE TABLE voluntary (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, created_at DATETIME NOT NULL --(DC2Type:datetime_immutable)

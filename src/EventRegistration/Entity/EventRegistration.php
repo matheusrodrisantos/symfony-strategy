@@ -31,10 +31,10 @@ class EventRegistration
     #[ORM\JoinColumn(nullable: false)]
     private ?Event $event = null;
 
-    #[ORM\Column(nullable:false)]
+    #[Embedded(class:Money::class, columnPrefix:false)]
     private ?Money $money = null;
 
-    #[Embedded(class:Status::class)]
+    #[Embedded(class:Status::class, columnPrefix:false)]
     private ?Status $status;
 
     #[ORM\Column]
