@@ -37,6 +37,7 @@ final class EventController extends AbstractController
             return $this->responseService->createSuccessResponse($eventOutputc->toArray(),Response::HTTP_CREATED); 
 
         }catch(\Exception $e){
+            $this->logger->debug(' error'.$e->getMessage());
             return $this->json('ERROR !'.$e->getMessage());   
         }
     }
