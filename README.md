@@ -2,7 +2,7 @@
 
 ## Sobre o Projeto
 
-Este é um projeto de API para gerenciamento de **EventRccs**, desenvolvido com **Symfony 7.2** e **PHP 8.3**. A aplicação segue o padrão de projeto **Strategy** e permite o gerenciamento de EventRccs e seus **participants** através de uma API RESTful.
+Este é um projeto de API para gerenciamento de **Event**, desenvolvido com **Symfony 7.2** e **PHP 8.4**. A aplicação segue o padrão de projeto **Strategy** e permite o gerenciamento de EventRccs e seus **participants** através de uma API RESTful.
 
 **Objetivo:** Estudo e implementação de boas práticas de arquitetura e design, com foco no uso do Symfony e no desenvolvimento modular de sistemas.
 
@@ -10,38 +10,6 @@ Este é um projeto de API para gerenciamento de **EventRccs**, desenvolvido com 
 
 A estrutura do projeto segue o padrão modular por feature, facilitando a escalabilidade e a manutenção. Cada módulo é responsável por uma funcionalidade específica, como o gerenciamento de eventos, participantes e inscrições.
 
-```
-.
-├── Command
-│   └── MakeModuleCommand.php               # Comando para criar novos módulos
-├── EventRcc
-│   ├── Controller
-│   │   └── EventRccController.php         # Controlador responsável pelas ações de EventRcc
-│   ├── DTO
-│   │   ├── EventRccInputDTO.php          # DTO para entrada de dados de EventRcc
-│   │   └── EventRccOutputDTO.php         # DTO para saída de dados de EventRcc
-│   ├── Entity
-│   │   └── EventRcc.php                  # Entidade EventRcc
-│   ├── Factory
-│   │   └── EventRccFactory.php           # Fábrica para criação de EventRcc
-│   ├── Repository
-│   │   └── EventRccRepository.php        # Repositório para consultas de EventRcc
-│   └── Service
-│       └── EventRccService.php           # Serviço com lógica de negócios para EventRcc
-├── Kernel.php
-├── Participant
-│   ├── Controller
-│   │   └── ParticipantController.php     # Controlador responsável pelas ações de participantes
-│   ├── DTO
-│   │   ├── ParticipantInputDTO.php      # DTO para entrada de dados de participante
-│   │   └── ParticipantOutputDTO.php     # DTO para saída de dados de participante
-│   ├── Entity
-│   │   └── Participant.php              # Entidade participante
-│   ├── Repository
-│   │   └── ParticipantRepository.php    # Repositório para consultas de participantes
-│   └── Service
-│       └── ParticipantService.php       # Serviço com lógica de negócios para participantes
-```
 
 ## Tecnologias Utilizadas
 
